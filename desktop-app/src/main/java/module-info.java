@@ -1,6 +1,7 @@
 module com.swedist.desktopapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.swedist.desktopapp to javafx.fxml;
