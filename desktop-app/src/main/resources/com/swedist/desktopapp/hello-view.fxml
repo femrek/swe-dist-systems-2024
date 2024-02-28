@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="269.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button layoutX="24.0" layoutY="193.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="63.0" text="Button" />
-      <TextField layoutX="87.0" layoutY="83.0" prefHeight="26.0" prefWidth="110.0" />
-   </children>
-</AnchorPane>
+<VBox alignment="CENTER" prefHeight="431.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swedist.desktopapp.controller.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <children>
+         <Label layoutX="32.0" layoutY="14.0" text="Id" />
+         <TextField fx:id="t1" layoutX="100.0" layoutY="10.0" prefWidth="145.0" promptText="id" scaleShape="false" />
+         <Label graphicTextGap="2.0" layoutX="26.0" layoutY="50.0" text="Name" />
+         <TextField fx:id="t2" layoutX="100.0" layoutY="46.0" prefHeight="8.0" prefWidth="193.0" promptText="name" />
+         <Label layoutX="21.0" layoutY="91.0" text="Department" />
+         <TextField fx:id="t3" layoutX="111.0" layoutY="86.0" prefHeight="26.0" prefWidth="154.0" promptText="Department" />
+          <Button layoutX="12.0" layoutY="136.0" onAction="#onSaveButtonClick" text="Save" />
+         <Button layoutX="185.0" layoutY="136.0" onAction="#onDeleteButtonClick" text="Delete" />
+         <Button onAction="#onFetchButtonClick" layoutX="432.0" layoutY="33.0" mnemonicParsing="false" text="Fetch" />
+         <Button onAction="#onUpdateButtonClick" layoutX="90.0" layoutY="136.0" mnemonicParsing="false" text="Update" />
+      </children>
+   </AnchorPane>
+</VBox>
