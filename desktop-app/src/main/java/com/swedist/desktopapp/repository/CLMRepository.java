@@ -6,8 +6,8 @@ import java.sql.*;
 
 public class CLMRepository {
     // JDBC parameters
-    private final String URL = "jdbc:postgresql://127.0.0.1:3306/cr";
-    private final String USER = "root";
+    private final String URL = "jdbc:postgresql://127.0.0.1:5432/ComputerLab";
+    private final String USER = "postgres";
     private final String PASSWORD = "1234";
     private Connection conn = null;
     private Statement stm = null;
@@ -16,15 +16,15 @@ public class CLMRepository {
     public Student getStudentById(int studentId) throws SQLException
     {
         conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        String query = "SELECT * FROM student WHERE id =" + studentId + ";";
+        String query = "SELECT * FROM student WHERE student_id =" + studentId + ";";
         stm = conn.createStatement();
         rs = stm.executeQuery(query);
 
         Student student = new Student();
         while(rs.next())
         {
-            student.setId(rs.getInt("id"));
-            student.setName(rs.getString("name"));
+            student.setId(rs.getInt("student_id"));
+            student.setName(rs.getString("student_name"));
             student.setDepartment(rs.getString("department"));
         }
         conn.close();
