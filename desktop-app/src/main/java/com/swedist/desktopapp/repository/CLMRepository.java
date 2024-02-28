@@ -30,4 +30,30 @@ public class CLMRepository {
         conn.close();
         return student;
     }
+
+    // Add a new Student
+    public void addStudent(Student student) throws SQLException
+    {
+        conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        String query = "INSERT INTO student (student_name,department) VALUES ("+ student.getName() + "," +student.getDepartment() + ");";
+        stm = conn.createStatement();
+        stm.executeQuery(query);
+
+
+        conn.close();
+    }
+
+    public void updateStudent(Student student) throws SQLException
+    {
+        Student std = getStudentById(student.getId());
+        if (std != null){
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            String query = "UPDATE student SET student_name ="+ student.getName() + ", department = "+student.getDepartment() + "WHERE student_id ="+ student.getId()+";";
+            stm = conn.createStatement();
+            stm.executeQuery(query);
+            conn.close();
+        }
+
+
+    }
 }
