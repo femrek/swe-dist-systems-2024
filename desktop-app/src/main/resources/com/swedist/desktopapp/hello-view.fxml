@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="431.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swedist.desktopapp.controller.MainController">
+<VBox alignment="CENTER" prefHeight="375.0" prefWidth="604.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swedist.desktopapp.controller.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <AnchorPane prefHeight="200.0" prefWidth="200.0">
+   <Label text="Students" textFill="#000000e8">
+      <font>
+         <Font size="25.0" />
+      </font>
+   </Label>
+   <AnchorPane prefHeight="215.0" prefWidth="564.0">
       <children>
-         <Label layoutX="32.0" layoutY="14.0" text="Id" />
-         <TextField fx:id="t1" layoutX="100.0" layoutY="10.0" prefWidth="145.0" promptText="id" scaleShape="false" />
-         <Label graphicTextGap="2.0" layoutX="26.0" layoutY="50.0" text="Name" />
-         <TextField fx:id="t2" layoutX="100.0" layoutY="46.0" prefHeight="8.0" prefWidth="193.0" promptText="name" />
-         <Label layoutX="21.0" layoutY="91.0" text="Department" />
-         <TextField fx:id="t3" layoutX="111.0" layoutY="86.0" prefHeight="26.0" prefWidth="154.0" promptText="Department" />
-          <Button layoutX="12.0" layoutY="136.0" onAction="#onSaveButtonClick" text="Save" />
-         <Button layoutX="185.0" layoutY="136.0" onAction="#onDeleteButtonClick" text="Delete" />
-         <Button onAction="#onFetchButtonClick" layoutX="432.0" layoutY="33.0" mnemonicParsing="false" text="Fetch" />
-         <Button onAction="#onUpdateButtonClick" layoutX="90.0" layoutY="136.0" mnemonicParsing="false" text="Update" />
+         <Label layoutX="32.0" layoutY="14.0" text="Student ID" />
+         <TextField fx:id="t1" layoutX="159.0" layoutY="10.0" prefHeight="26.0" prefWidth="194.0" promptText="id" scaleShape="false" />
+         <Label graphicTextGap="2.0" layoutX="26.0" layoutY="50.0" text="Student Name" />
+         <TextField fx:id="t2" layoutX="159.0" layoutY="46.0" prefHeight="8.0" prefWidth="193.0" promptText="name" />
+         <Label layoutX="21.0" layoutY="91.0" text="Student Department" />
+         <TextField fx:id="t3" layoutX="159.0" layoutY="86.0" prefHeight="26.0" prefWidth="194.0" promptText="Department" />
+          <Button layoutX="68.0" layoutY="149.0" onAction="#onSaveButtonClick" text="Save" />
+         <Button layoutX="279.0" layoutY="149.0" onAction="#onDeleteButtonClick" text="Delete" />
+         <Button layoutX="437.0" layoutY="10.0" mnemonicParsing="false" onAction="#onFetchButtonClick" text="Fetch" />
+         <Button layoutX="159.0" layoutY="149.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" text="Update" />
+         <Button layoutX="406.0" layoutY="149.0" mnemonicParsing="false" text="Close" />
       </children>
    </AnchorPane>
 </VBox>
