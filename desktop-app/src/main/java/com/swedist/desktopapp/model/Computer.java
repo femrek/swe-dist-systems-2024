@@ -1,7 +1,7 @@
 package com.swedist.desktopapp.model;
 
 public class Computer {
-    private Long id;
+    private int id;
     private String brand;
     private String model;
 
@@ -13,17 +13,17 @@ public class Computer {
         this.model = model;
     }
 
-    public Computer(Long id, String brand, String model) {
+    public Computer(int id, String brand, String model) {
         this.id = id;
         this.brand = brand;
         this.model = model;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
