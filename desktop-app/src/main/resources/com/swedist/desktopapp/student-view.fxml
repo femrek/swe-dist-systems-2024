@@ -20,16 +20,16 @@
    <AnchorPane prefHeight="215.0" prefWidth="564.0">
       <children>
          <Label layoutX="32.0" layoutY="14.0" text="Student ID" />
-         <TextField fx:id="t1" layoutX="159.0" layoutY="10.0" prefHeight="26.0" prefWidth="194.0" promptText="id" scaleShape="false" />
+         <TextField fx:id="student_t1" layoutX="159.0" layoutY="10.0" prefHeight="26.0" prefWidth="194.0" promptText="id" scaleShape="false" />
          <Label graphicTextGap="2.0" layoutX="26.0" layoutY="50.0" text="Student Name" />
-         <TextField fx:id="t2" layoutX="159.0" layoutY="46.0" prefHeight="8.0" prefWidth="193.0" promptText="name" />
+         <TextField fx:id="student_t2" layoutX="159.0" layoutY="46.0" prefHeight="8.0" prefWidth="193.0" promptText="name" />
          <Label layoutX="21.0" layoutY="91.0" text="Student Department" />
-         <TextField fx:id="t3" layoutX="159.0" layoutY="86.0" prefHeight="26.0" prefWidth="194.0" promptText="Department" />
-          <Button layoutX="68.0" layoutY="149.0" onAction="#onSaveButtonClick" text="Save" />
-         <Button layoutX="279.0" layoutY="149.0" onAction="#onDeleteButtonClick" text="Delete" />
-         <Button layoutX="437.0" layoutY="10.0" mnemonicParsing="false" onAction="#onFetchButtonClick" text="Fetch" />
-         <Button layoutX="159.0" layoutY="149.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" text="Update" />
-         <Button layoutX="406.0" layoutY="149.0" mnemonicParsing="false" text="Close" />
+         <TextField fx:id="student_t3" layoutX="159.0" layoutY="86.0" prefHeight="26.0" prefWidth="194.0" promptText="Department" />
+          <Button layoutX="68.0" layoutY="149.0" onAction="#onSaveButtonClickStudent" text="Save" />
+         <Button layoutX="279.0" layoutY="149.0" onAction="#onDeleteButtonClickStudent" text="Delete" />
+         <Button layoutX="437.0" layoutY="10.0" mnemonicParsing="false" onAction="#onFetchButtonClickStudent" text="Fetch" />
+         <Button layoutX="159.0" layoutY="149.0" mnemonicParsing="false" onAction="#onUpdateButtonClickStudent" text="Update" />
+         <Button layoutX="406.0" layoutY="149.0" mnemonicParsing="false" onAction="#onCloseButtonClickStudent" text="Close" />
       </children>
    </AnchorPane>
 </VBox>
