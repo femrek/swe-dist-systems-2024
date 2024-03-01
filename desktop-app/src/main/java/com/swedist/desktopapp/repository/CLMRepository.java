@@ -1,7 +1,7 @@
 package com.swedist.desktopapp.repository;
 
+import com.swedist.desktopapp.model.Computer;
 import com.swedist.desktopapp.model.Student;
-
 import java.sql.*;
 
 public class CLMRepository {
@@ -31,6 +31,24 @@ public class CLMRepository {
         return student;
     }
 
+    public Computer getComputerById(int computerId) throws SQLException
+    {
+        conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        String query = "SELECT * FROM computer WHERE computer_id=" + computerId + ";";
+        stm = conn.createStatement();
+        rs = stm.executeQuery(query);
+
+        Computer computer = new Computer();
+        while (rs.next())
+        {
+            computer.setId(rs.getInt("computer_id"));
+            computer.setBrand(rs.getString("brand"));
+            computer.setModel(rs.getString("model"));
+        }
+        conn.close();
+        return computer;
+    }
+
     // Add a new Student
     public void addStudent(Student student1) throws SQLException
     {
@@ -51,8 +69,6 @@ public class CLMRepository {
             stm.execute(query);
             conn.close();
         }
-
-
     }
 
     public void deleteStudent(Student student) throws SQLException
@@ -65,7 +81,5 @@ public class CLMRepository {
             stm.execute(query);
             conn.close();
         }
-
-
     }
 }
