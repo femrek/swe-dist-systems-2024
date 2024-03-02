@@ -5,13 +5,12 @@ import com.swedist.desktopapp.repository.CLMRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import java.sql.SQLException;
 
-public class MainController {
+public class StudentController {
     @FXML
-    private Label welcomeText;
-    @FXML
-    private TextField student_t1, student_t2, student_t3, computer_t1, computer_t2, computer_t3;
+    private TextField student_t1, student_t2, student_t3;
 
     //FXML
     // Read Operation
@@ -26,7 +25,7 @@ public class MainController {
 
     // Create Operation
     @FXML
-    protected void onSaveButtonClickStudent() throws Exception{
+    protected void onSaveButtonClickStudent() throws Exception {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
 //        student.setId(Integer.parseInt(t1.getText()));
@@ -37,7 +36,7 @@ public class MainController {
 
     //Update Operation
     @FXML
-    protected void onUpdateButtonClickStudent() throws SQLException{
+    protected void onUpdateButtonClickStudent() throws SQLException {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
         student.setId(Integer.parseInt(student_t1.getText()));
@@ -48,7 +47,7 @@ public class MainController {
 
     //Delete Operation
     @FXML
-    protected void onDeleteButtonClickStudent() throws SQLException{
+    protected void onDeleteButtonClickStudent() throws SQLException {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
         student.setId(Integer.parseInt(student_t1.getText()));
@@ -58,32 +57,7 @@ public class MainController {
     }
 
     @FXML
-    protected void onCloseButtonClickStudent()
-    {
-        System.exit(0);
-    }
-
-    @FXML
-    protected void onSaveButtonClickComputer()
-    {
-
-    }
-
-    @FXML
-    protected void onUpdateButtonClickComputer()
-    {
-
-    }
-
-    @FXML
-    protected void onDeleteButtonClickComputer()
-    {
-
-    }
-
-    @FXML
-    protected void onCloseButtonClickComputer()
-    {
+    protected void onCloseButtonClickStudent() {
         System.exit(0);
     }
 }
