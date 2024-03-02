@@ -59,6 +59,15 @@ public class CLMRepository {
         conn.close();
     }
 
+    public void addComputer(Computer computer1)throws SQLException
+    {
+        conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        stm = conn.createStatement();
+        String query = "INSERT INTO computer (brand,model) VALUES ('" + computer1.getBrand() + "','" + computer1.getModel() +"');";
+        stm.execute(query);
+        conn.close();
+    }
+
     public void updateStudent(Student student) throws SQLException
     {
         Student std = getStudentById(student.getId());
@@ -71,12 +80,36 @@ public class CLMRepository {
         }
     }
 
+    public void updateComputer(Computer computer) throws SQLException
+    {
+        Student std = getStudentById(computer.getId());
+        if (std != null){
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            String query = "UPDATE computer SET brand ='"+ computer.getBrand() + "', model = '"+computer.getModel() + "'WHERE computer_id ="+ computer.getId()+";";
+            stm = conn.createStatement();
+            stm.execute(query);
+            conn.close();
+        }
+    }
+
     public void deleteStudent(Student student) throws SQLException
     {
         Student std = getStudentById(student.getId());
         if (std != null){
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
             String query = "DELETE FROM student WHERE student_id="+ student.getId() + ";";
+            stm = conn.createStatement();
+            stm.execute(query);
+            conn.close();
+        }
+    }
+
+    public void deleteComputer(Computer computer) throws SQLException
+    {
+        Student std = getStudentById(computer.getId());
+        if (std != null){
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            String query = "DELETE FROM computer WHERE computer_id="+ computer.getId() + ";";
             stm = conn.createStatement();
             stm.execute(query);
             conn.close();
