@@ -15,12 +15,12 @@
     </Label>
     <Label layoutX="78.0" layoutY="161.0" text="Computer ID "/>
     <Label layoutX="58.0" layoutY="204.0" text="Computer Model"/>
-    <TextField fx:id="computer_t1" layoutX="188.0" layoutY="157.0" prefHeight="26.0" prefWidth="185.0"
+    <TextField fx:id="computerIdField" layoutX="188.0" layoutY="157.0" prefHeight="26.0" prefWidth="185.0"
                promptText="Computer ID"/>
-    <TextField fx:id="computer_t2" layoutX="188.0" layoutY="200.0" prefHeight="26.0" prefWidth="186.0"
+    <TextField fx:id="computerModelField" layoutX="188.0" layoutY="200.0" prefHeight="26.0" prefWidth="186.0"
                promptText="Computer Model"/>
     <Label layoutX="60.0" layoutY="252.0" text="Computer Brand"/>
-    <TextField fx:id="computer_t3" layoutX="188.0" layoutY="248.0" prefHeight="26.0" prefWidth="186.0"
+    <TextField fx:id="computerBrandField" layoutX="188.0" layoutY="248.0" prefHeight="26.0" prefWidth="186.0"
                promptText="Computer Brand"/>
     <Button layoutX="422.0" layoutY="157.0" mnemonicParsing="false" text="Fetch"
             onAction="#onFetchButtonClickComputer"/>
