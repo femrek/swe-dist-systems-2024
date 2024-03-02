@@ -31,5 +31,5 @@
     <Button layoutX="330.0" layoutY="310.0" mnemonicParsing="false" onAction="#onDeleteButtonClickComputer"
             text="Delete"/>
     <Button layoutX="444.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCloseButtonClickComputer"
-            text="Close"/>
+            text="Exit"/>
 </AnchorPane>

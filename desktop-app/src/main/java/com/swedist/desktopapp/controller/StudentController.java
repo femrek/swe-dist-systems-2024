@@ -1,10 +1,14 @@
 package com.swedist.desktopapp.controller;
 
+import com.swedist.desktopapp.CLMApp;
 import com.swedist.desktopapp.model.Student;
 import com.swedist.desktopapp.repository.CLMRepository;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
@@ -59,5 +63,16 @@ public class StudentController {
     @FXML
     protected void onCloseButtonClickStudent() {
         System.exit(0);
+    }
+
+    @FXML
+    protected void  onButtonClickComputerView() throws Exception
+    {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(CLMApp.class.getResource("computer-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Computer");
+        stage.setScene(scene);
+        stage.show();
     }
 }
