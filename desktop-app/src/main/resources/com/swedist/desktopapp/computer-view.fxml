@@ -6,23 +6,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="415.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swedist.desktopapp.controller.MainController">
-   <children>
-    <Button layoutX="422.0" layoutY="157.0" mnemonicParsing="false" text="Fetch" />
-      <Label layoutX="242.0" layoutY="84.0" text="Computers" textFill="#000000f7">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="78.0" layoutY="161.0" text="Computer ID " />
-      <Label layoutX="58.0" layoutY="204.0" text="Computer Model" />
-      <TextField fx:id="computer_t1" layoutX="188.0" layoutY="157.0" prefHeight="26.0" prefWidth="185.0" promptText="Computer ID" />
-      <TextField fx:id="computer_t2" layoutX="188.0" layoutY="200.0" prefHeight="26.0" prefWidth="186.0" promptText="Computer Model" />
-      <Label layoutX="60.0" layoutY="252.0" text="Computer Brand" />
-      <TextField fx:id="computer_t3" layoutX="188.0" layoutY="248.0" prefHeight="26.0" prefWidth="186.0" promptText="Computer Brand" />
-      <Button layoutX="78.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSaveButtonClickComputer" text="Save" />
-      <Button layoutX="198.0" layoutY="310.0" mnemonicParsing="false" onAction="#onUpdateButtonClickComputer" text="Update" />
-      <Button layoutX="330.0" layoutY="310.0" mnemonicParsing="false" onAction="#onDeleteButtonClickComputer" text="Delete" />
-      <Button layoutX="444.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCloseButtonClickComputer" text="Close" />
-   </children>
+<AnchorPane prefHeight="415.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.swedist.desktopapp.controller.ComputerController">
+    <Label layoutX="242.0" layoutY="84.0" text="Computers" textFill="#000000f7">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+    <Label layoutX="78.0" layoutY="161.0" text="Computer ID "/>
+    <Label layoutX="58.0" layoutY="204.0" text="Computer Model"/>
+    <TextField fx:id="computer_t1" layoutX="188.0" layoutY="157.0" prefHeight="26.0" prefWidth="185.0"
+               promptText="Computer ID"/>
+    <TextField fx:id="computer_t2" layoutX="188.0" layoutY="200.0" prefHeight="26.0" prefWidth="186.0"
+               promptText="Computer Model"/>
+    <Label layoutX="60.0" layoutY="252.0" text="Computer Brand"/>
+    <TextField fx:id="computer_t3" layoutX="188.0" layoutY="248.0" prefHeight="26.0" prefWidth="186.0"
+               promptText="Computer Brand"/>
+    <Button layoutX="422.0" layoutY="157.0" mnemonicParsing="false" text="Fetch"
+            onAction="#onFetchButtonClickComputer"/>
+    <Button layoutX="78.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSaveButtonClickComputer"
+            text="Save"/>
+    <Button layoutX="198.0" layoutY="310.0" mnemonicParsing="false" onAction="#onUpdateButtonClickComputer"
+            text="Update"/>
+    <Button layoutX="330.0" layoutY="310.0" mnemonicParsing="false" onAction="#onDeleteButtonClickComputer"
+            text="Delete"/>
+    <Button layoutX="444.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCloseButtonClickComputer"
+            text="Close"/>
 </AnchorPane>
