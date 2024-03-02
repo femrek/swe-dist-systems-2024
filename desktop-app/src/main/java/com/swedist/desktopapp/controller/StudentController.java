@@ -6,7 +6,6 @@ import com.swedist.desktopapp.repository.CLMRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -14,7 +13,7 @@ import java.sql.SQLException;
 
 public class StudentController {
     @FXML
-    private TextField student_t1, student_t2, student_t3;
+    private TextField studentIdField, studentNameField, studentDepartmentField;
 
     //FXML
     // Read Operation
@@ -22,9 +21,9 @@ public class StudentController {
     protected void onFetchButtonClickStudent() throws SQLException {
         CLMRepository repository = new CLMRepository();
         Student student;
-        student = repository.getStudentById(Integer.parseInt(student_t1.getText()));
-        student_t2.setText(student.getName());
-        student_t3.setText(student.getDepartment());
+        student = repository.getStudentById(Integer.parseInt(studentIdField.getText()));
+        studentNameField.setText(student.getName());
+        studentDepartmentField.setText(student.getDepartment());
     }
 
     // Create Operation
@@ -33,8 +32,8 @@ public class StudentController {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
 //        student.setId(Integer.parseInt(t1.getText()));
-        student.setName(student_t2.getText());
-        student.setDepartment(student_t3.getText());
+        student.setName(studentNameField.getText());
+        student.setDepartment(studentDepartmentField.getText());
         repository.addStudent(student);
     }
 
@@ -43,9 +42,9 @@ public class StudentController {
     protected void onUpdateButtonClickStudent() throws SQLException {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
-        student.setId(Integer.parseInt(student_t1.getText()));
-        student.setName(student_t2.getText());
-        student.setDepartment(student_t3.getText());
+        student.setId(Integer.parseInt(studentIdField.getText()));
+        student.setName(studentNameField.getText());
+        student.setDepartment(studentDepartmentField.getText());
         repository.updateStudent(student);
     }
 
@@ -54,9 +53,9 @@ public class StudentController {
     protected void onDeleteButtonClickStudent() throws SQLException {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
-        student.setId(Integer.parseInt(student_t1.getText()));
-        student.setName(student_t2.getText());
-        student.setDepartment(student_t3.getText());
+        student.setId(Integer.parseInt(studentIdField.getText()));
+        student.setName(studentNameField.getText());
+        student.setDepartment(studentDepartmentField.getText());
         repository.deleteStudent(student);
     }
 
