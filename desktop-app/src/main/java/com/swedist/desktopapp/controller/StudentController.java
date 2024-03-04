@@ -15,7 +15,6 @@ public class StudentController {
     @FXML
     private TextField studentIdField, studentNameField, studentDepartmentField;
 
-    //FXML
     // Read Operation
     @FXML
     protected void onFetchButtonClickStudent() throws SQLException {
@@ -28,10 +27,9 @@ public class StudentController {
 
     // Create Operation
     @FXML
-    protected void onSaveButtonClickStudent() throws Exception {
+    protected void onSaveButtonClickStudent() throws SQLException {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
-//        student.setId(Integer.parseInt(t1.getText()));
         student.setName(studentNameField.getText());
         student.setDepartment(studentDepartmentField.getText());
         repository.addStudent(student);

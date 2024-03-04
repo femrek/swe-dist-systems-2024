@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import java.sql.SQLException;
 
 public class ComputerController {
-
     @FXML
     TextField computerIdField, computerBrandField, computerModelField;
 
