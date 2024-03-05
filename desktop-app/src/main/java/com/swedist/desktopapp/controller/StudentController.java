@@ -39,6 +39,7 @@ public class StudentController {
     protected void onSaveButtonClickStudent() {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
+        student.setId(Integer.parseInt(studentIdField.getText()));
         student.setName(studentNameField.getText());
         student.setDepartment(studentDepartmentField.getText());
         try {

@@ -33,6 +33,7 @@ public class ComputerController {
     public void onSaveButtonClickComputer() {
         CLMRepository repository = new CLMRepository();
         Computer computer = new Computer();
+        computer.setId(Integer.parseInt(computerIdField.getText()));
         computer.setBrand(computerBrandField.getText());
         computer.setModel(computerModelField.getText());
         try {

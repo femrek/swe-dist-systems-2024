@@ -54,7 +54,7 @@ public class CLMRepository {
     {
         conn = DriverManager.getConnection(URL, USER, PASSWORD);
         stm = conn.createStatement();
-        String query = "INSERT INTO student (student_name,department) VALUES ('" + student1.getName() + "','" + student1.getDepartment() +"');";
+        String query = "INSERT INTO student (student_id,student_name,department) VALUES (" + student1.getId() +",'" + student1.getName() + "','" + student1.getDepartment() +"');";
         stm.execute(query);
         conn.close();
     }
@@ -63,7 +63,7 @@ public class CLMRepository {
     {
         conn = DriverManager.getConnection(URL, USER, PASSWORD);
         stm = conn.createStatement();
-        String query = "INSERT INTO computer (brand,model) VALUES ('" + computer1.getBrand() + "','" + computer1.getModel() +"');";
+        String query = "INSERT INTO computer (computer_id,brand,model) VALUES ("+ computer1.getId() +",'" + computer1.getBrand() + "','" + computer1.getModel() +"');";
         stm.execute(query);
         conn.close();
     }
