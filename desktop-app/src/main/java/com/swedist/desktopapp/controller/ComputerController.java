@@ -3,6 +3,7 @@ package com.swedist.desktopapp.controller;
 import com.swedist.desktopapp.model.Computer;
 import com.swedist.desktopapp.repository.CLMRepository;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
@@ -12,40 +13,72 @@ public class ComputerController {
     TextField computerIdField, computerBrandField, computerModelField;
 
     @FXML
-    public void onFetchButtonClickComputer() throws SQLException {
+    public void onFetchButtonClickComputer() {
         CLMRepository repository = new CLMRepository();
         Computer computer;
-        computer = repository.getComputerById(Integer.parseInt(computerIdField.getText()));
-        computerBrandField.setText(computer.getBrand());
-        computerModelField.setText(computer.getModel());
+        try {
+            computer = repository.getComputerById(Integer.parseInt(computerIdField.getText()));
+            computerBrandField.setText(computer.getBrand());
+            computerModelField.setText(computer.getModel());
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     @FXML
-    public void onSaveButtonClickComputer() throws SQLException {
+    public void onSaveButtonClickComputer() {
         CLMRepository repository = new CLMRepository();
         Computer computer = new Computer();
         computer.setBrand(computerBrandField.getText());
         computer.setModel(computerModelField.getText());
-        repository.addComputer(computer);
-        computerIdField.setText("" + computer.getId());
+        try {
+            repository.addComputer(computer);
+            computerIdField.setText("" + computer.getId());
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     @FXML
-    public void onUpdateButtonClickComputer() throws SQLException {
+    public void onUpdateButtonClickComputer() {
         CLMRepository repository = new CLMRepository();
         Computer computer = new Computer();
         computer.setId(Integer.parseInt(computerIdField.getText()));
         computer.setBrand(computerBrandField.getText());
         computer.setModel(computerModelField.getText());
-        repository.updateComputer(computer);
+        try {
+            repository.updateComputer(computer);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     @FXML
-    public void onDeleteButtonClickComputer() throws SQLException {
+    public void onDeleteButtonClickComputer() {
         CLMRepository repository = new CLMRepository();
         Computer computer = new Computer();
         computer.setId(Integer.parseInt(computerIdField.getText()));
-        repository.deleteComputer(computer);
+        try {
+            repository.deleteComputer(computer);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     @FXML

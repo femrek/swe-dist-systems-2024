@@ -6,6 +6,7 @@ import com.swedist.desktopapp.repository.CLMRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,44 +18,76 @@ public class StudentController {
 
     // Read Operation
     @FXML
-    protected void onFetchButtonClickStudent() throws SQLException {
+    protected void onFetchButtonClickStudent() {
         CLMRepository repository = new CLMRepository();
         Student student;
-        student = repository.getStudentById(Integer.parseInt(studentIdField.getText()));
-        studentNameField.setText(student.getName());
-        studentDepartmentField.setText(student.getDepartment());
+        try {
+            student = repository.getStudentById(Integer.parseInt(studentIdField.getText()));
+            studentNameField.setText(student.getName());
+            studentDepartmentField.setText(student.getDepartment());
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     // Create Operation
     @FXML
-    protected void onSaveButtonClickStudent() throws SQLException {
+    protected void onSaveButtonClickStudent() {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
         student.setName(studentNameField.getText());
         student.setDepartment(studentDepartmentField.getText());
-        repository.addStudent(student);
+        try {
+            repository.addStudent(student);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     //Update Operation
     @FXML
-    protected void onUpdateButtonClickStudent() throws SQLException {
+    protected void onUpdateButtonClickStudent() {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
         student.setId(Integer.parseInt(studentIdField.getText()));
         student.setName(studentNameField.getText());
         student.setDepartment(studentDepartmentField.getText());
-        repository.updateStudent(student);
+        try {
+            repository.updateStudent(student);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     //Delete Operation
     @FXML
-    protected void onDeleteButtonClickStudent() throws SQLException {
+    protected void onDeleteButtonClickStudent() {
         CLMRepository repository = new CLMRepository();
         Student student = new Student();
         student.setId(Integer.parseInt(studentIdField.getText()));
         student.setName(studentNameField.getText());
         student.setDepartment(studentDepartmentField.getText());
-        repository.deleteStudent(student);
+        try {
+            repository.deleteStudent(student);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sql Error");
+            alert.setContentText(e.toString());
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -63,8 +96,7 @@ public class StudentController {
     }
 
     @FXML
-    protected void  onButtonClickComputerView() throws Exception
-    {
+    protected void onButtonClickComputerView() throws Exception {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CLMApp.class.getResource("computer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
