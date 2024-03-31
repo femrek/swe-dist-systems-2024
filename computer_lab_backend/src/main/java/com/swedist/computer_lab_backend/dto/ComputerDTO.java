@@ -10,12 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ComputerDto {
+public class ComputerDTO {
     private Long id;
     private String brand;
     private String model;
 
-    public ComputerDto(Computer computer) {
+    public ComputerDTO(Computer computer) {
         id = computer.getId();
         brand = computer.getBrand();
         model = computer.getModel();

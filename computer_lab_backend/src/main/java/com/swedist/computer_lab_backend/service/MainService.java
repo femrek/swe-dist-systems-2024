@@ -1,6 +1,6 @@
 package com.swedist.computer_lab_backend.service;
 
-import com.swedist.computer_lab_backend.dto.ComputerDto;
+import com.swedist.computer_lab_backend.dto.ComputerDTO;
 import com.swedist.computer_lab_backend.model.Computer;
 import com.swedist.computer_lab_backend.repository.ComputerRepository;
 import com.swedist.computer_lab_backend.repository.ComputerStudentRepository;
@@ -21,11 +21,11 @@ public class MainService {
         this.studentRepository = studentRepository;
     }
 
-    public ComputerDto createComputer(ComputerDto computerDto) {
+    public ComputerDTO createComputer(ComputerDTO computerDto) {
         Computer computer = new Computer();
         computer.setModel(computerDto.getModel());
         computer.setBrand(computerDto.getBrand());
         Computer savedComputer = computerRepository.save(computer);
-        return new ComputerDto(savedComputer);
+        return new ComputerDTO(savedComputer);
     }
 }

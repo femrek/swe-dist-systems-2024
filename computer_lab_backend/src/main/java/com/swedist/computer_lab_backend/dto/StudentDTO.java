@@ -5,18 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class StudentDto {
+public class StudentDTO {
     private Long id;
     private String name;
     private String department;
 
-    public StudentDto(Student student) {
+    public StudentDTO(Student student) {
         id = student.getId();
         name = student.getName();
         department = student.getDepartment();

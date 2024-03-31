@@ -1,11 +1,6 @@
 package com.swedist.computer_lab_backend.dto;
 
-import com.swedist.computer_lab_backend.model.Computer;
 import com.swedist.computer_lab_backend.model.ComputerStudent;
-import com.swedist.computer_lab_backend.model.Student;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +13,17 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ComputerStudentDto {
+public class ComputerStudentDTO {
     private Long id;
-    private StudentDto student;
-    private ComputerDto computer;
+    private StudentDTO student;
+    private ComputerDTO computer;
     private Date reservationDate;
     private Duration duration;
 
-    public ComputerStudentDto(ComputerStudent computerStudent) {
+    public ComputerStudentDTO(ComputerStudent computerStudent) {
         id = computerStudent.getId();
-        student = new StudentDto(computerStudent.getStudent());
-        computer = new ComputerDto(computerStudent.getComputer());
+        student = new StudentDTO(computerStudent.getStudent());
+        computer = new ComputerDTO(computerStudent.getComputer());
         reservationDate = computerStudent.getReservationDate();
         duration = computerStudent.getDuration();
     }
