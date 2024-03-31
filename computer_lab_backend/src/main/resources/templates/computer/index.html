@@ -6,11 +6,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
 <div class="container">
-    <h1>Computer Lab Management</h1>
-    <h2>Computers</h2>
+    <div th:insert="components/header :: header(Computers)"></div>
+    <button class="btn btn-primary" data-dismiss="modal">Add Computer</button>
+    <br><br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="computer : ${computers}">
+            <td th:text="${computer.getBrand()}">{brand}</td>
+            <td th:text="${computer.getModel()}">{model}</td>
+            <td>
+                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-secondary">Reserve</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
 </body>
 </html>

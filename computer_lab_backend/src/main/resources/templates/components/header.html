@@ -1,0 +1,13 @@
+<!--suppress ThymeleafVariablesResolveInspection -->
+<div th:fragment="header(subtitle)">
+    <h1>Computer Lab Management</h1>
+    <div th:if="subtitle != null">
+        <h2 th:text="${subtitle}">{subtitle}</h2>
+    </div>
+    <div th:if="${successMessage != null}">
+        <div class="alert alert-success" role="alert" th:text="${successMessage}">{success}</div>
+    </div>
+    <div th:if="${errorMessage != null}">
+        <div class="alert alert-danger" role="alert" th:text="${errorMessage}">{error}</div>
+    </div>
+</div>
