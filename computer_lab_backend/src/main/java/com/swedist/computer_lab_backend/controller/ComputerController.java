@@ -24,44 +24,63 @@ public class ComputerController {
     }
 
     @GetMapping({"/", ""})
-    public String showComputers(@RequestParam(required = false) String successMessage, Model model) {
+    public String showComputers(@RequestParam(required = false) String successMessage,
+                                @RequestParam(required = false) String errorMessage,
+                                Model model) {
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
         model.addAttribute(SUCCESS_MESSAGE_KEY,
                 Objects.requireNonNullElse(successMessage, "Computer list fetched successfully"));
+        if (errorMessage != null) {
+            model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
+        }
         return "computer/index";
     }
 
     @PostMapping(value = {"/", ""})
-    public String addComputer(ComputerDTO computerDTO, Model model) {
-        String message;
+    public String addComputer(ComputerDTO computerDTO) {
+        String successMessage = null;
+        String errorMessage = null;
         try {
             ComputerDTO createdComputer = computerService.createComputer(computerDTO);
-            message = "Computer added successfully. id: %d".formatted(createdComputer.getId());
+            successMessage = "Computer added successfully. id: %d".formatted(createdComputer.getId());
         } catch (Exception e) {
-            model.addAttribute(ERROR_MESSAGE_KEY, "Failed to add computer");
-            message = "Failed to add computer";
+            errorMessage = "Failed to add computer";
         }
-        return "redirect:computer?successMessage=%s".formatted(message);
+        return getRedirect(successMessage, errorMessage);
     }
 
     @PostMapping("/{id}")
-    public String updateComputer(@RequestBody ComputerDTO computerDTO, @PathVariable Long id, Model model) {
+    public String updateComputer(ComputerDTO computerDTO, @PathVariable Long id) {
+        String successMessage = null;
+        String errorMessage = null;
         try {
             computerDTO.setId(id);
             ComputerDTO updatedComputer = computerService.updateComputer(computerDTO);
-            model.addAttribute(
-                    SUCCESS_MESSAGE_KEY, "Computer updated successfully. id: %d".formatted(updatedComputer.getId()));
+            successMessage = "Computer updated successfully. id: %d".formatted(updatedComputer.getId());
         } catch (Exception e) {
-            model.addAttribute(
-                    ERROR_MESSAGE_KEY, "Failed to update computer. id: %d".formatted(computerDTO.getId()));
+            errorMessage = "Failed to update computer. id: %d".formatted(computerDTO.getId());
         }
-        return "redirect:computer/";
+        return getRedirect(successMessage, errorMessage);
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteComputer(@PathVariable Long id, Model model) {
-        computerService.deleteComputer(id);
-        model.addAttribute(SUCCESS_MESSAGE_KEY, "Computer deleted successfully");
-        return "redirect:computer/";
+    public String deleteComputer(@PathVariable Long id) {
+        String successMessage = null;
+        String errorMessage = null;
+        try {
+            computerService.deleteComputer(id);
+            successMessage = "Computer deleted successfully. id: %d".formatted(id);
+        } catch (Exception e) {
+            errorMessage = "Failed to delete computer. id: %d".formatted(id);
+        }
+        return getRedirect(successMessage, errorMessage);
+    }
+
+    private String getRedirect(String successMessage, String errorMessage) {
+        StringBuilder redirectUrl = new StringBuilder("redirect:computer/");
+        if (errorMessage != null || successMessage != null) redirectUrl.append("?");
+        if (errorMessage != null) redirectUrl.append("errorMessage=").append(errorMessage);
+        else if (successMessage != null) redirectUrl.append("successMessage=").append(successMessage);
+        return redirectUrl.toString();
     }
 }
