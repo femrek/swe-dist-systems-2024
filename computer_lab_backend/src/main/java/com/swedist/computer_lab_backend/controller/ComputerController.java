@@ -28,8 +28,8 @@ public class ComputerController {
         return "computer/index";
     }
 
-    @PostMapping({"/", ""})
-    public String addComputer(@RequestBody ComputerDTO computerDTO, Model model) {
+    @PostMapping(value = {"/", ""})
+    public String addComputer(ComputerDTO computerDTO, Model model) {
         try {
             ComputerDTO createdComputer = computerService.createComputer(computerDTO);
             model.addAttribute(
@@ -41,9 +41,10 @@ public class ComputerController {
         return "computer/index";
     }
 
-    @PutMapping({"/", ""})
-    public String updateComputer(@RequestBody ComputerDTO computerDTO, Model model) {
+    @PostMapping("/{id}")
+    public String updateComputer(@RequestBody ComputerDTO computerDTO, @PathVariable Long id, Model model) {
         try {
+            computerDTO.setId(id);
             ComputerDTO updatedComputer = computerService.updateComputer(computerDTO);
             model.addAttribute(
                     SUCCESS_MESSAGE_KEY, "Computer updated successfully. id: %d".formatted(updatedComputer.getId()));
@@ -55,7 +56,7 @@ public class ComputerController {
         return "computer/index";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteComputer(@PathVariable Long id, Model model) {
         computerService.deleteComputer(id);
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());

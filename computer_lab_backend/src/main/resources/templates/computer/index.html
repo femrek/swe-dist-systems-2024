@@ -30,7 +30,8 @@
             <td>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
-                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve</button>
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve
+                </button>
             </td>
         </tr>
         </tbody>
@@ -45,13 +46,15 @@
                 <h1 class="modal-title fs-5">Add Computer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="">
+            <form th:action="@{/computer}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="nameAdd" placeholder="Name">
+                        <label for="Name" class="form-label">Email address</label>
+                        <input type="text" class="form-control" id="Name" name="brand" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="cityAdd" placeholder="City">
+                        <label for="City" class="form-label">Email address</label>
+                        <input type="text" class="form-control" id="City" name="model" placeholder="City">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -147,7 +150,8 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="day">Day</span>
-                        <input type="text" class="form-control" placeholder="day" aria-label="day" aria-describedby="day">
+                        <input type="text" class="form-control" placeholder="day" aria-label="day"
+                               aria-describedby="day">
                     </div>
 
                 </div>
