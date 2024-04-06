@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <div th:insert="components/header :: header(Computers)"></div>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Computer</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addComputer">Add Computer</button>
     <br><br>
     <table class="table">
         <thead>
@@ -28,21 +28,22 @@
             <td th:text="${computer.getBrand()}">{brand}</td>
             <td th:text="${computer.getModel()}">{model}</td>
             <td>
-                <button class="btn btn-primary">Update</button>
-                <button class="btn btn-danger">Delete</button>
-                <button class="btn btn-secondary">Reserve</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve
+                </button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Add Computer Modal -->
+<div class="modal fade" id="addComputer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Computer</h1>
+                <h1 class="modal-title fs-5">Add Computer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/computer}" method="post">
@@ -57,12 +58,111 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<!-- Add Computer Modal -->
+
+<!-- Update Computer Modal -->
+<div class="modal fade" id="updateComputer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update Computer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="nameUpdate" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="cityUpdate" placeholder="City">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Update Computer Modal -->
+
+<!-- Delete Computer Modal -->
+<div class="modal fade" id="deleteComputer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete Computer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="nameDelete" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="cityDelete" placeholder="City">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Computer Modal -->
+
+<!-- Reservation Computer Modal -->
+<div class="modal fade" id="reservationComputer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Reserve a computer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="" placeholder="Name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Computer</label>
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="date">date</span>
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="day">Day</span>
+                        <input type="text" class="form-control" placeholder="day" aria-label="day"
+                               aria-describedby="day">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Reservation Computer Modal -->
 </body>
 </html>
