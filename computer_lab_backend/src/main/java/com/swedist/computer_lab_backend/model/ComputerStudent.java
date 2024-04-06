@@ -1,16 +1,16 @@
 package com.swedist.computer_lab_backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Duration;
 import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"student", "computer"})
 @Entity
 @Table(name = "computer_student")
 public class ComputerStudent {

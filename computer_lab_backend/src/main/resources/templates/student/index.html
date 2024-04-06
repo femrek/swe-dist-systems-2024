@@ -10,10 +10,30 @@
     <script src="/js/bootstrap.js"></script>
 </head>
 <body>
-
 <div class="container">
-    <div th:insert="components/header :: header(Students)"></div>
+    <div th:insert="components/header :: header(Student)"></div>
+    <button class="btn btn-primary" data-dismiss="modal">Add Student</button>
+    <br><br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.getName()}">{name}</td>
+            <td th:text="${student.getDepartment()}">{department}</td>
+            <td>
+                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-secondary">Reserve</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
 </body>
 </html>
