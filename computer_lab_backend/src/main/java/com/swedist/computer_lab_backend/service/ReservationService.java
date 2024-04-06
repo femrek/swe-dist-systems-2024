@@ -1,9 +1,7 @@
 package com.swedist.computer_lab_backend.service;
 
 import com.swedist.computer_lab_backend.dto.ComputerStudentDTO;
-import com.swedist.computer_lab_backend.dto.StudentDTO;
 import com.swedist.computer_lab_backend.model.ComputerStudent;
-import com.swedist.computer_lab_backend.model.Student;
 import com.swedist.computer_lab_backend.repository.ComputerStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -81,5 +81,4 @@ public class StudentController {
         else if (successMessage != null) redirectUrl.append("successMessage=").append(successMessage);
         return redirectUrl.toString();
     }
-
 }
