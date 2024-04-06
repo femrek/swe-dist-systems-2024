@@ -46,7 +46,7 @@ public class StudentService {
         return new StudentDTO(savedStudent);
     }
 
-    public void deleteComputer(Long id) {
+    public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
 }

@@ -1,7 +1,6 @@
 package com.swedist.computer_lab_backend.controller;
 
 import com.swedist.computer_lab_backend.service.ReservationService;
-import com.swedist.computer_lab_backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
