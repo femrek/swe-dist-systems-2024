@@ -2,6 +2,7 @@ package com.swedist.computer_lab_backend.controller;
 
 import com.swedist.computer_lab_backend.dto.ComputerDTO;
 import com.swedist.computer_lab_backend.service.ComputerService;
+import com.swedist.computer_lab_backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,18 +10,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
-import static com.swedist.computer_lab_backend.constants.AppConstants.SUCCESS_MESSAGE_KEY;
-import static com.swedist.computer_lab_backend.constants.AppConstants.ERROR_MESSAGE_KEY;
-import static com.swedist.computer_lab_backend.constants.AppConstants.COMPUTER_LIST_KEY;
+import static com.swedist.computer_lab_backend.constants.AppConstants.*;
 
 @Controller
 @RequestMapping("/computer")
 public class ComputerController {
     private final ComputerService computerService;
 
+    private final StudentService studentService;
+
     @Autowired
-    public ComputerController(ComputerService computerService) {
+    public ComputerController(ComputerService computerService, StudentService studentService) {
         this.computerService = computerService;
+        this.studentService = studentService;
     }
 
     @GetMapping({"/", ""})
@@ -28,6 +30,7 @@ public class ComputerController {
                                 @RequestParam(required = false) String errorMessage,
                                 Model model) {
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
+        model.addAttribute(STUDENT_LIST_KEY, studentService.getStudents());
         model.addAttribute(SUCCESS_MESSAGE_KEY,
                 Objects.requireNonNullElse(successMessage, "Computer list fetched successfully"));
         if (errorMessage != null) {
@@ -77,7 +80,7 @@ public class ComputerController {
     }
 
     private String getRedirect(String successMessage, String errorMessage) {
-        StringBuilder redirectUrl = new StringBuilder("redirect:computer/");
+        StringBuilder redirectUrl = new StringBuilder("redirect:/computer/");
         if (errorMessage != null || successMessage != null) redirectUrl.append("?");
         if (errorMessage != null) redirectUrl.append("errorMessage=").append(errorMessage);
         else if (successMessage != null) redirectUrl.append("successMessage=").append(successMessage);

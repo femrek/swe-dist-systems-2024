@@ -28,9 +28,9 @@
             <td th:text="${computer.getBrand()}">{brand}</td>
             <td th:text="${computer.getModel()}">{model}</td>
             <td>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
-                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve
+                <button class="btn btn-primary" th:attr="onclick=|onUpdateClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
+                <button class="btn btn-danger" th:attr="onclick=|onDeleteClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
+                <button class="btn btn-secondary" th:attr="onclick=|onReserveClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve
                 </button>
             </td>
         </tr>
@@ -49,12 +49,12 @@
             <form th:action="@{/computer}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="Name" class="form-label">Email address</label>
-                        <input type="text" class="form-control" id="Name" name="brand" placeholder="Name">
+                        <label for="Name" class="form-label">Brand</label>
+                        <input type="text" class="form-control" id="Name" name="brand" placeholder="Brand">
                     </div>
                     <div class="mb-3">
-                        <label for="City" class="form-label">Email address</label>
-                        <input type="text" class="form-control" id="City" name="model" placeholder="City">
+                        <label for="City" class="form-label">Model</label>
+                        <input type="text" class="form-control" id="City" name="model" placeholder="Model">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -75,18 +75,18 @@
                 <h1 class="modal-title fs-5">Update Computer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="">
+            <form id="updateForm" th:action="@{/computer}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="nameUpdate" placeholder="Name">
+                        <input type="text" class="form-control" name="brand" id="brandUpdateInput" placeholder="Brand">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="cityUpdate" placeholder="City">
+                        <input type="text" class="form-control" name="model" id="modelUpdateInput" placeholder="Model">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
@@ -102,18 +102,18 @@
                 <h1 class="modal-title fs-5">Delete Computer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="">
+            <form id="deleteForm" th:action="@{/computer}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="nameDelete" placeholder="Name">
+                        <input type="text" class="form-control" id="brandDeleteInput" placeholder="Brand" disabled>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="cityDelete" placeholder="City">
+                        <input type="text" class="form-control" id="modelDeleteInput" placeholder="Model" disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
@@ -132,25 +132,22 @@
             <form action="">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="" placeholder="Name">
+                        <input type="text" class="form-control" id="computerReserveInput" placeholder="Name" disabled>
                     </div>
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Computer</label>
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <label class="input-group-text" for="studentReserveInput">Student</label>
+                        <select class="form-select" id="studentReserveInput">
+                            <option th:each="student:${students}" th:text="${student.getName()}">Choose...</option>
                         </select>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="date">date</span>
+                        <span class="input-group-text" id="date">Date</span>
                         <input type="date" class="form-control" aria-label="date" aria-describedby="date">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="day">Day</span>
-                        <input type="text" class="form-control" placeholder="day" aria-label="day"
+                        <input type="text" class="form-control" placeholder="Day" aria-label="day"
                                aria-describedby="day">
                     </div>
 
@@ -164,5 +161,29 @@
     </div>
 </div>
 <!-- Reservation Computer Modal -->
+<script>
+
+    function onUpdateClick(id,brand,model){
+
+        document.getElementById("updateForm").action = "/computer/" + id;
+        console.log("onUpdateClick"+ id);
+        document.getElementById("modelUpdateInput").value = model;
+        document.getElementById("brandUpdateInput").value = brand;
+    }
+    function onDeleteClick(id,brand,model){
+
+        document.getElementById("deleteForm").action = "/computer/" + id + "/delete";
+        document.getElementById("modelDeleteInput").value = model;
+        document.getElementById("brandDeleteInput").value = brand;
+    }
+
+    function onReserveClick(id,brand,model){
+
+
+        document.getElementById("computerReserveInput").value = brand + " - " +model;
+        document.getElementById("studentReserveInput").value = brand;
+    }
+</script>
 </body>
+
 </html>
