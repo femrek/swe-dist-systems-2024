@@ -27,8 +27,8 @@
         <tr th:each="reservation : ${reservations}">
             <td th:text="${reservation.getStudent().getName()}">{name}</td>
             <td th:text="|${reservation.getComputer().getBrand()} ${reservation.getComputer().getModel()}|">{department}</td>
-            <td th:text="${reservation.getReservationDate()}">{start}</td>
-            <td th:text="${reservation.getDuration()}">{duration}</td>
+            <td th:text="${reservation.getDateFormatted()}">{start}</td>
+            <td th:text="|${reservation.getDuration()} days|">{duration}</td>
             <td>
                 <button class="btn btn-primary">Update</button>
                 <button class="btn btn-danger">Delete</button>

@@ -22,4 +22,8 @@ public class Computer {
 
     @OneToMany(fetch = FetchType.EAGER, targetEntity = ComputerStudent.class, mappedBy = "computer")
     private Set<ComputerStudent> reservations;
+
+    public Computer(Long id) {
+        this.id = id;
+    }
 }
