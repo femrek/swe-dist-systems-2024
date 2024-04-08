@@ -129,26 +129,27 @@
                 <h1 class="modal-title fs-5">Reserve a computer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="">
+            <form id="reservationForm" th:action="@{/reservation}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="computerReserveInput" placeholder="Name" disabled>
+                        <input type="text" class="form-control" id="computerReserveInputDummy" placeholder="Name" disabled>
                     </div>
+                    <input id="computerReserveInput" hidden="hidden" name="computerId">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="studentReserveInput">Student</label>
-                        <select class="form-select" id="studentReserveInput">
-                            <option th:each="student:${students}" th:text="${student.getName()}">Choose...</option>
+                        <select class="form-select" id="studentReserveInput" name="studentId">
+                            <option th:each="student:${students}" th:text="${student.getName()}" th:value="${student.getId()}" ></option>
                         </select>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="date">Date</span>
-                        <input type="date" class="form-control" aria-label="date" aria-describedby="date">
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date" name="reservationDate">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="day">Day</span>
                         <input type="text" class="form-control" placeholder="Day" aria-label="day"
-                               aria-describedby="day">
+                               aria-describedby="day" name="duration">
                     </div>
 
                 </div>
@@ -180,9 +181,11 @@
     function onReserveClick(id,brand,model){
 
 
-        document.getElementById("computerReserveInput").value = brand + " - " +model;
+        document.getElementById("computerReserveInputDummy").value = brand + " - " +model;
         document.getElementById("studentReserveInput").value = brand;
+        document.getElementById("computerReserveInput").value=id;
     }
+
 </script>
 </body>
 

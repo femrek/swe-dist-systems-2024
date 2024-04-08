@@ -16,6 +16,6 @@ public class ReservationPostRequest {
     private Long id;
     private Long studentId;
     private Long computerId;
-    private Date reservationDate;
-    private Duration duration;
+    private String reservationDate;
+    private Integer duration;
 }
