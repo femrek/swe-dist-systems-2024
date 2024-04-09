@@ -1,6 +1,7 @@
 package com.swedist.computer_lab_backend.controller;
 
 import com.swedist.computer_lab_backend.dto.StudentDTO;
+import com.swedist.computer_lab_backend.service.ComputerService;
 import com.swedist.computer_lab_backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,14 @@ import static com.swedist.computer_lab_backend.constants.AppConstants.*;
 @RequestMapping("/student")
 public class StudentController {
     private final StudentService studentService;
+    private final ComputerService computerService;
+
+
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, ComputerService computerService) {
         this.studentService = studentService;
+        this.computerService = computerService;
     }
 
     @GetMapping({"/", ""})
@@ -26,6 +31,7 @@ public class StudentController {
                                @RequestParam(required = false) String errorMessage,
                                Model model) {
         model.addAttribute(STUDENT_LIST_KEY, studentService.getStudents());
+        model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
         model.addAttribute(SUCCESS_MESSAGE_KEY,
                 Objects.requireNonNullElse(successMessage, "Student list fetched successfully"));
         if (errorMessage != null) {
@@ -35,7 +41,7 @@ public class StudentController {
     }
 
     @PostMapping({"/", ""})
-    public String addStudent(@RequestBody StudentDTO studentDTO) {
+    public String addStudent(StudentDTO studentDTO) {
         String successMessage = null;
         String errorMessage = null;
         try {
@@ -75,7 +81,7 @@ public class StudentController {
     }
 
     private String getRedirect(String successMessage, String errorMessage) {
-        StringBuilder redirectUrl = new StringBuilder("redirect:student/");
+        StringBuilder redirectUrl = new StringBuilder("redirect:/student/");
         if (errorMessage != null || successMessage != null) redirectUrl.append("?");
         if (errorMessage != null) redirectUrl.append("errorMessage=").append(errorMessage);
         else if (successMessage != null) redirectUrl.append("successMessage=").append(successMessage);
