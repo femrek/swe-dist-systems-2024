@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ComputerLab</title>
     <link rel="stylesheet" href="/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="/css/bootstrap.css">
@@ -11,8 +12,8 @@
 </head>
 <body>
 <div class="container">
-    <div th:insert="components/header :: header(Student)"></div>
-    <button class="btn btn-primary" data-dismiss="modal">Add Student</button>
+    <div th:insert="~{components/header :: header(Student)}"></div>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudent">Add Student</button>
     <br><br>
     <table class="table">
         <thead>
@@ -27,13 +28,169 @@
             <td th:text="${student.getName()}">{name}</td>
             <td th:text="${student.getDepartment()}">{department}</td>
             <td>
-                <button class="btn btn-primary">Update</button>
-                <button class="btn btn-danger">Delete</button>
-                <button class="btn btn-secondary">Reserve</button>
+                <button class="btn btn-primary" th:attr="onclick=|onUpdateClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|" data-bs-toggle="modal" data-bs-target="#updateStudent">Update</button>
+                <button class="btn btn-danger" th:attr="onclick=|onDeleteClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete</button>
+                <button class="btn btn-secondary" th:attr="onclick=|onReserveClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+<!-- Add Student Modal -->
+<div class="modal fade" id="addStudent" tabindex="-1" aria-labelledby="ExampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Add Student</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/student}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="Name" name="name" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="City" class="form-label">Department</label>
+                        <input type="text" class="form-control" id="City" name="department" placeholder="Department">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Student Modal -->
+
+<!-- Update Student Modal -->
+<div class="modal fade" id="updateStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update Student</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="updateForm" th:action="@{/student}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="name" id="nameUpdateInput" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="department" id="departmentUpdateInput" placeholder="Department">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Update Student Modal -->
+
+<!-- Delete Student Modal -->
+<div class="modal fade" id="deleteStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete Student</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteForm" th:action="@{/student}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="nameDeleteInput" placeholder="Name" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="departmentDeleteInput" placeholder="Department" disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Student Modal -->
+
+<!-- Reservation Student Modal -->
+<div class="modal fade" id="reservationComputer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Reserve a computer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="reservationForm" th:action="@{/reservation}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="studentReserveInputDummy" placeholder="Name" disabled>
+                    </div>
+                    <input id="computerReserveInput" hidden="hidden" name="computerId">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="computerReserveInput">Computer</label>
+                        <select class="form-select" id="studentReserveInput" name="computerId">
+                            <option th:each="computer:${computers}" th:text="${computer.getBrand()}" th:value="${computer.getModel()}" ></option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="date">Date</span>
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date" name="reservationDate">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="day">Day</span>
+                        <input type="text" class="form-control" placeholder="Day" aria-label="day"
+                               aria-describedby="day" name="duration">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Reservation Student Modal -->
+
+<br><br>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary me-md-2" type="button" onclick="window.location.href='/'">Home</button>
+    <button class="btn btn-primary me-md-2" type="button" onclick="window.location.href='/computer'" >Computer</button>
+    <button class="btn btn-primary me-md-4" type="button" onclick="window.location.href='/reservation'">Reservation</button>
+</div>
 </body>
+<script>
+
+    function onUpdateClick(id,name,department){
+
+        document.getElementById("updateForm").action = "/student/" + id;
+        console.log("onUpdateClick"+ id);
+        document.getElementById("nameUpdateInput").value = name;
+        document.getElementById("departmentUpdateInput").value = department;
+    }
+    function onDeleteClick(id,name,department){
+
+        document.getElementById("deleteForm").action = "/student/" + id + "/delete";
+        document.getElementById("nameDeleteInput").value = name;
+        document.getElementById("departmentDeleteInput").value = department;
+    }
+
+    function onReserveClick(id,name,department){
+
+
+        document.getElementById("studentReserveInputDummy").value = department + " - " + name;
+        document.getElementById("studentReserveInput").value = department;
+        document.getElementById("computerReserveInput").value = id;
+    }
+
+</script>
 </html>

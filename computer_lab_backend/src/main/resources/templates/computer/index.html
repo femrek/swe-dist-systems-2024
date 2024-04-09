@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Title</title>
+    <title>ComputerLab</title>
     <link rel="stylesheet" href="/css/bootstrap-grid.css">
     <link rel="stylesheet" href="/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="/css/bootstrap.css">
@@ -29,7 +29,7 @@
             <td th:text="${computer.getModel()}">{model}</td>
             <td>
                 <button class="btn btn-primary" th:attr="onclick=|onUpdateClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
-                <button class="btn btn-danger" th:attr="onclick=|onDeleteClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
+                <button class="btn btn-danger"  th:attr="onclick=|onDeleteClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
                 <button class="btn btn-secondary" th:attr="onclick=|onReserveClick(${computer.getId()},'${computer.getBrand()}','${computer.getModel()}')|" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve
                 </button>
             </td>
@@ -162,6 +162,12 @@
     </div>
 </div>
 <!-- Reservation Computer Modal -->
+<br><br>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary me-md-2" type="button" onclick="window.location.href='/'">Home</button>
+    <button class="btn btn-primary me-md-2" type="button" onclick="window.location.href='/student'">Student</button>
+    <button class="btn btn-primary me-md-4" type="button" onclick="window.location.href='/reservation'">Reservation</button>
+</div>
 <script>
 
     function onUpdateClick(id,brand,model){
