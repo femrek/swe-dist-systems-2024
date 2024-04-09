@@ -139,30 +139,38 @@
             </div>
             <form id="reservationForm" th:action="@{/reservation}" method="post">
                 <div class="modal-body">
+                    <!-- dummy computer input. shows computer name -->
                     <div class="mb-3">
                         <input type="text" class="form-control" id="computerReserveInputDummy" placeholder="Name"
                                disabled>
                     </div>
+
+                    <!-- computer input. keeps computer id -->
                     <input id="computerReserveInput" hidden="hidden" name="computerId">
+
+                    <!-- student dropdown menu input -->
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="studentReserveInput">Student</label>
                         <select class="form-select" id="studentReserveInput" name="studentId">
-                            <option th:each="student:${students}" th:text="${student.getName()}"
+                            <option th:each="student:${students}"
+                                    th:text="|${student.getName()} - ${student.getDepartment()}|"
                                     th:value="${student.getId()}"></option>
                         </select>
                     </div>
+
+                    <!-- date input -->
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="date">Date</span>
                         <input type="date" class="form-control" aria-label="date" aria-describedby="date"
                                name="reservationDate">
                     </div>
 
+                    <!-- duration in days input -->
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="day">Day</span>
                         <input type="text" class="form-control" placeholder="Day" aria-label="day"
                                aria-describedby="day" name="duration">
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -189,7 +197,7 @@
 
     function onReserveClick(id, brand, model) {
         document.getElementById("computerReserveInputDummy").value = brand + " - " + model;
-        document.getElementById("studentReserveInput").value = brand;
+        // document.getElementById("studentReserveInput").value = brand;
         document.getElementById("computerReserveInput").value = id;
     }
 </script>

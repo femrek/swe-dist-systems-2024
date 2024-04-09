@@ -140,24 +140,31 @@
             </div>
             <form id="reservationForm" th:action="@{/reservation}" method="post">
                 <div class="modal-body">
+                    <!-- dummy student input. shows student name -->
                     <div class="mb-3">
                         <input type="text" class="form-control" id="studentReserveInputDummy" placeholder="Name"
                                disabled>
                     </div>
-                    <input id="computerReserveInput" hidden="hidden" name="computerId">
+                    <!-- student input. keeps student id -->
+                    <input id="studentReserveInput" hidden="hidden" name="studentId">
+
+                    <!-- computer dropdown menu input -->
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="computerReserveInput">Computer</label>
-                        <select class="form-select" id="studentReserveInput" name="computerId">
-                            <option th:each="computer:${computers}" th:text="${computer.getBrand()}"
-                                    th:value="${computer.getModel()}"></option>
+                        <select class="form-select" id="computerReserveInput" name="computerId">
+                            <option th:each="computer:${computers}" th:text="|${computer.getBrand()} - ${computer.getModel()}|"
+                                    th:value="${computer.getId()}"></option>
                         </select>
                     </div>
+
+                    <!-- date input -->
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="date">Date</span>
                         <input type="date" class="form-control" aria-label="date" aria-describedby="date"
                                name="reservationDate">
                     </div>
 
+                    <!-- duration in days input -->
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="day">Day</span>
                         <input type="text" class="form-control" placeholder="Day" aria-label="day"
@@ -190,10 +197,8 @@
 
     function onReserveClick(id, name, department) {
         document.getElementById("studentReserveInputDummy").value = department + " - " + name;
-        document.getElementById("studentReserveInput").value = department;
-        document.getElementById("computerReserveInput").value = id;
+        document.getElementById("studentReserveInput").value = id;
     }
-
 </script>
 </body>
 </html>
