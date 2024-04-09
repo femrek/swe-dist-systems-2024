@@ -28,9 +28,18 @@
             <td th:text="${student.getName()}">{name}</td>
             <td th:text="${student.getDepartment()}">{department}</td>
             <td>
-                <button class="btn btn-primary" th:attr="onclick=|onUpdateClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|" data-bs-toggle="modal" data-bs-target="#updateStudent">Update</button>
-                <button class="btn btn-danger" th:attr="onclick=|onDeleteClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|" data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete</button>
-                <button class="btn btn-secondary" th:attr="onclick=|onReserveClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve</button>
+                <button class="btn btn-primary"
+                        th:attr="onclick=|onUpdateClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|"
+                        data-bs-toggle="modal" data-bs-target="#updateStudent">Update
+                </button>
+                <button class="btn btn-danger"
+                        th:attr="onclick=|onDeleteClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|"
+                        data-bs-toggle="modal" data-bs-target="#deleteStudent">Delete
+                </button>
+                <button class="btn btn-secondary"
+                        th:attr="onclick=|onReserveClick(${student.getId()},'${student.getName()}','${student.getDepartment()}')|"
+                        data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve
+                </button>
             </td>
         </tr>
         </tbody>
@@ -79,7 +88,8 @@
                         <input type="text" class="form-control" name="name" id="nameUpdateInput" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="department" id="departmentUpdateInput" placeholder="Department">
+                        <input type="text" class="form-control" name="department" id="departmentUpdateInput"
+                               placeholder="Department">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,7 +116,8 @@
                         <input type="text" class="form-control" id="nameDeleteInput" placeholder="Name" disabled>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="departmentDeleteInput" placeholder="Department" disabled>
+                        <input type="text" class="form-control" id="departmentDeleteInput" placeholder="Department"
+                               disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -130,18 +141,21 @@
             <form id="reservationForm" th:action="@{/reservation}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="studentReserveInputDummy" placeholder="Name" disabled>
+                        <input type="text" class="form-control" id="studentReserveInputDummy" placeholder="Name"
+                               disabled>
                     </div>
                     <input id="computerReserveInput" hidden="hidden" name="computerId">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="computerReserveInput">Computer</label>
                         <select class="form-select" id="studentReserveInput" name="computerId">
-                            <option th:each="computer:${computers}" th:text="${computer.getBrand()}" th:value="${computer.getModel()}" ></option>
+                            <option th:each="computer:${computers}" th:text="${computer.getBrand()}"
+                                    th:value="${computer.getModel()}"></option>
                         </select>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="date">Date</span>
-                        <input type="date" class="form-control" aria-label="date" aria-describedby="date" name="reservationDate">
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date"
+                               name="reservationDate">
                     </div>
 
                     <div class="input-group mb-3">
@@ -160,30 +174,26 @@
     </div>
 </div>
 <!-- Reservation Student Modal -->
-</body>
+
 <script>
-
-    function onUpdateClick(id,name,department){
-
+    function onUpdateClick(id, name, department) {
         document.getElementById("updateForm").action = "/student/" + id;
-        console.log("onUpdateClick"+ id);
         document.getElementById("nameUpdateInput").value = name;
         document.getElementById("departmentUpdateInput").value = department;
     }
-    function onDeleteClick(id,name,department){
 
+    function onDeleteClick(id, name, department) {
         document.getElementById("deleteForm").action = "/student/" + id + "/delete";
         document.getElementById("nameDeleteInput").value = name;
         document.getElementById("departmentDeleteInput").value = department;
     }
 
-    function onReserveClick(id,name,department){
-
-
+    function onReserveClick(id, name, department) {
         document.getElementById("studentReserveInputDummy").value = department + " - " + name;
         document.getElementById("studentReserveInput").value = department;
         document.getElementById("computerReserveInput").value = id;
     }
 
 </script>
+</body>
 </html>

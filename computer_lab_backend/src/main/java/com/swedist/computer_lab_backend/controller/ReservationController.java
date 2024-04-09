@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Objects;
 
 import static com.swedist.computer_lab_backend.constants.AppConstants.*;
 
@@ -22,12 +25,18 @@ public class ReservationController {
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
+
     @GetMapping({"/", ""})
-    public String showReservations(Model model) {
+    public String showReservations(@RequestParam(required = false) String successMessage,
+                                   @RequestParam(required = false) String errorMessage,
+                                   Model model) {
         model.addAttribute(RESERVATION_LIST_KEY, reservationService.getReservations());
-        model.addAttribute(SUCCESS_MESSAGE_KEY, "Reservation list fetched successfully");
+        model.addAttribute(SUCCESS_MESSAGE_KEY,
+                Objects.requireNonNullElse(successMessage, "Reservation list fetched successfully"));
+        if (errorMessage != null) model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
         return "reservation/index";
     }
+
     @PostMapping(value = {"/", ""})
     public String addReservation(ReservationPostRequest reservationPostRequest) {
         String successMessage = null;
@@ -40,6 +49,7 @@ public class ReservationController {
         }
         return getRedirect(successMessage, errorMessage);
     }
+
     private String getRedirect(String successMessage, String errorMessage) {
         StringBuilder redirectUrl = new StringBuilder("redirect:/reservation/");
         if (errorMessage != null || successMessage != null) redirectUrl.append("?");

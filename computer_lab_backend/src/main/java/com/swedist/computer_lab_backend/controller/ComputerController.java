@@ -33,9 +33,7 @@ public class ComputerController {
         model.addAttribute(STUDENT_LIST_KEY, studentService.getStudents());
         model.addAttribute(SUCCESS_MESSAGE_KEY,
                 Objects.requireNonNullElse(successMessage, "Computer list fetched successfully"));
-        if (errorMessage != null) {
-            model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
-        }
+        if (errorMessage != null) model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
         return "computer/index";
     }
 

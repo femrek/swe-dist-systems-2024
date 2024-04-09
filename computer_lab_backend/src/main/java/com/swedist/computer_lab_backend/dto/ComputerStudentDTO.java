@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -29,12 +27,9 @@ public class ComputerStudentDTO {
         reservationDate = computerStudent.getReservationDate();
         duration = computerStudent.getDuration().toDays();
     }
+
     public String getDateFormatted(){
-
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(reservationDate);
-
     }
 }

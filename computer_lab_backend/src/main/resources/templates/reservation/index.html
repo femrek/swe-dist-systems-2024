@@ -12,7 +12,6 @@
 <body>
 <div class="container">
     <div th:insert="~{components/header :: header(Reservation)}"></div>
-    <br><br>
     <table class="table">
         <thead>
         <tr>
@@ -26,7 +25,9 @@
         <tbody>
         <tr th:each="reservation : ${reservations}">
             <td th:text="${reservation.getStudent().getName()}">{name}</td>
-            <td th:text="|${reservation.getComputer().getBrand()} ${reservation.getComputer().getModel()}|">{department}</td>
+            <td th:text="|${reservation.getComputer().getBrand()} ${reservation.getComputer().getModel()}|">
+                {department}
+            </td>
             <td th:text="${reservation.getDateFormatted()}">{start}</td>
             <td th:text="|${reservation.getDuration()} days|">{duration}</td>
             <td>

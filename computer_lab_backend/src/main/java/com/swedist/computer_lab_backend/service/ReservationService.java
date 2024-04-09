@@ -21,8 +21,11 @@ public class ReservationService {
     private final ComputerStudentRepository computerStudentRepository;
     private final ComputerRepository computerRepository;
     private final StudentRepository studentRepository;
+
     @Autowired
-    public ReservationService(ComputerStudentRepository computerStudentRepository, ComputerRepository computerRepository, StudentRepository studentRepository) {
+    public ReservationService(ComputerStudentRepository computerStudentRepository,
+                              ComputerRepository computerRepository,
+                              StudentRepository studentRepository) {
         this.computerStudentRepository = computerStudentRepository;
         this.computerRepository = computerRepository;
         this.studentRepository = studentRepository;
@@ -32,14 +35,15 @@ public class ReservationService {
         List<ComputerStudent> reservations = computerStudentRepository.findAll();
         return reservations.stream().map(ComputerStudentDTO::new).toList();
     }
+
     public ComputerStudentDTO getReservation(Long id) {
         ComputerStudent reservation = computerStudentRepository.findById(id).orElseThrow();
         return new ComputerStudentDTO(reservation);
     }
 
     public ComputerStudentDTO createReservation(ReservationPostRequest reservationPostRequest) {
-        Student student=studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow();
-        Computer computer=computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow();
+        Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow();
+        Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow();
         ComputerStudent computerStudent = new ComputerStudent();
         computerStudent.setStudent(student);
         computerStudent.setComputer(computer);

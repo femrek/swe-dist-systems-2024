@@ -18,8 +18,6 @@ public class StudentController {
     private final StudentService studentService;
     private final ComputerService computerService;
 
-
-
     @Autowired
     public StudentController(StudentService studentService, ComputerService computerService) {
         this.studentService = studentService;
@@ -34,9 +32,7 @@ public class StudentController {
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
         model.addAttribute(SUCCESS_MESSAGE_KEY,
                 Objects.requireNonNullElse(successMessage, "Student list fetched successfully"));
-        if (errorMessage != null) {
-            model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
-        }
+        if (errorMessage != null) model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
         return "student/index";
     }
 
