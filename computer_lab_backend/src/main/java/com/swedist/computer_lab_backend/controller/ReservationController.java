@@ -1,6 +1,5 @@
 package com.swedist.computer_lab_backend.controller;
 
-import com.swedist.computer_lab_backend.dto.ComputerDTO;
 import com.swedist.computer_lab_backend.dto.ComputerStudentDTO;
 import com.swedist.computer_lab_backend.dto.ReservationPostRequest;
 import com.swedist.computer_lab_backend.service.ReservationService;

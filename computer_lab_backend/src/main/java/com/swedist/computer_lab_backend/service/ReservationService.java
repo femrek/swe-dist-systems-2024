@@ -1,6 +1,5 @@
 package com.swedist.computer_lab_backend.service;
 
-import com.swedist.computer_lab_backend.dto.ComputerDTO;
 import com.swedist.computer_lab_backend.dto.ComputerStudentDTO;
 import com.swedist.computer_lab_backend.dto.ReservationPostRequest;
 import com.swedist.computer_lab_backend.model.Computer;
@@ -34,11 +33,6 @@ public class ReservationService {
     public List<ComputerStudentDTO> getReservations() {
         List<ComputerStudent> reservations = computerStudentRepository.findAll();
         return reservations.stream().map(ComputerStudentDTO::new).toList();
-    }
-
-    public ComputerStudentDTO getReservation(Long id) {
-        ComputerStudent reservation = computerStudentRepository.findById(id).orElseThrow();
-        return new ComputerStudentDTO(reservation);
     }
 
     public ComputerStudentDTO createReservation(ReservationPostRequest reservationPostRequest) {

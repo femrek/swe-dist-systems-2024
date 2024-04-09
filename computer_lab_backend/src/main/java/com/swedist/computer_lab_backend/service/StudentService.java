@@ -22,11 +22,6 @@ public class StudentService {
         return students.stream().map(StudentDTO::new).toList();
     }
 
-    public StudentDTO getStudent(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow();
-        return new StudentDTO(student);
-    }
-
     public StudentDTO createStudent(StudentDTO studentDTO) {
         Student student = new Student();
         student.setName(studentDTO.getName());

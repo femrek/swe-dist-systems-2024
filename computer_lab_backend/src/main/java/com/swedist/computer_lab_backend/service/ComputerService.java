@@ -22,11 +22,6 @@ public class ComputerService {
         return computers.stream().map(ComputerDTO::new).toList();
     }
 
-    public ComputerDTO getComputer(Long id) {
-        Computer computer = computerRepository.findById(id).orElseThrow();
-        return new ComputerDTO(computer);
-    }
-
     public ComputerDTO createComputer(ComputerDTO computerDto) {
         Computer computer = new Computer();
         computer.setModel(computerDto.getModel());
