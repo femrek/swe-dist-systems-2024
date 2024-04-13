@@ -60,8 +60,7 @@ public class ReservationService {
         return new ComputerStudentDTO(updatedComputerStudent);
     }
 
-    public void deleteReservation(Long id)
-    {
+    public void deleteReservation(Long id) {
         ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow();
         computerStudent.getStudent().delete(computerStudent);
         computerStudent.getComputer().delete(computerStudent);
