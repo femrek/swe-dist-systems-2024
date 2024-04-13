@@ -46,7 +46,17 @@ public class ReservationService {
         ComputerStudent savedComputerStudent = computerStudentRepository.save(computerStudent);
         System.out.println(savedComputerStudent);
         return new ComputerStudentDTO(savedComputerStudent);
-
     }
 
+    public ComputerStudentDTO updateReservation(Long id,ReservationPostRequest reservationPostRequest) {
+        Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow();
+        Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow();
+        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow();
+        computerStudent.setStudent(student);
+        computerStudent.setComputer(computer);
+        computerStudent.setReservationDate(Date.valueOf(reservationPostRequest.getReservationDate()));
+        computerStudent.setDuration(Duration.ofDays(reservationPostRequest.getDuration()));
+        ComputerStudent updatedComputerStudent = computerStudentRepository.save(computerStudent);
+        return new ComputerStudentDTO(updatedComputerStudent);
+    }
 }

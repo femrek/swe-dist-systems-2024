@@ -31,7 +31,11 @@
             <td th:text="${reservation.getDateFormatted()}">{start}</td>
             <td th:text="|${reservation.getDuration()} days|">{duration}</td>
             <td>
-                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-primary"
+                        th:attr="onclick=|onUpdateClick(${reservation.getId()},${reservation.getStudent().getId()}, ${reservation.getComputer().getId()}, '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
+                        data-bs-toggle="modal" data-bs-target="#updateReservation">
+                    Update
+                </button>
                 <button class="btn btn-danger">Delete</button>
                 <button class="btn btn-secondary">Reserve</button>
             </td>
@@ -39,5 +43,65 @@
         </tbody>
     </table>
 </div>
+<div class="modal fade" id="updateReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update the reservation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="reservationForm" th:action="@{/reservation}" method="post">
+                <div class="modal-body">
+                    <!-- computer dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="computerReserveInput">Computer</label>
+                        <select class="form-select" id="computerReserveInput" name="computerId">
+                            <option th:each="computer:${computers}"
+                                    th:text="|${computer.getBrand()} - ${computer.getModel()}|"
+                                    th:value="${computer.getId()}"></option>
+                        </select>
+                    </div>
+
+                    <!-- student dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="studentReserveInput">Student</label>
+                        <select class="form-select" id="studentReserveInput" name="studentId">
+                            <option th:each="student:${students}"
+                                    th:text="|${student.getName()} - ${student.getDepartment()}|"
+                                    th:value="${student.getId()}"></option>
+                        </select>
+                    </div>
+
+                    <!-- date input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="date">Date</span>
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date"
+                               name="reservationDate" id="reservationDateInput">
+                    </div>
+
+                    <!-- duration in days input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="day">Day</span>
+                        <input type="text" class="form-control" placeholder="Day" aria-label="day"
+                               aria-describedby="day" name="duration" id="reservationDurationInput">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function onUpdateClick(id, computerId, studentId, date, duration) {
+        document.getElementById("reservationForm").action = "/reservation/" + id;
+        document.getElementById("computerReserveInput").value = computerId;
+        document.getElementById("studentReserveInput").value = studentId;
+        document.getElementById("reservationDateInput").value = date;
+        document.getElementById("reservationDurationInput").value = duration;
+    }
+</script>
 </body>
 </html>
