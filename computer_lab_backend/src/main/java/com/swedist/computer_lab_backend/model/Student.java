@@ -20,6 +20,12 @@ public class Student {
 
     private String department;
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = ComputerStudent.class, mappedBy = "student")
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = ComputerStudent.class, mappedBy = "student", cascade = CascadeType.ALL)
     private Set<ComputerStudent> reservations;
+
+    public void delete(ComputerStudent computerStudent) {
+        if (reservations != null) {
+            reservations.remove(computerStudent);
+        }
+    }
 }

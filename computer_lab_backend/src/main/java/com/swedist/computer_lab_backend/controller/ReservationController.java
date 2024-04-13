@@ -2,8 +2,6 @@ package com.swedist.computer_lab_backend.controller;
 
 import com.swedist.computer_lab_backend.dto.ComputerStudentDTO;
 import com.swedist.computer_lab_backend.dto.ReservationPostRequest;
-import com.swedist.computer_lab_backend.repository.ComputerRepository;
-import com.swedist.computer_lab_backend.repository.StudentRepository;
 import com.swedist.computer_lab_backend.service.ComputerService;
 import com.swedist.computer_lab_backend.service.ReservationService;
 import com.swedist.computer_lab_backend.service.StudentService;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Objects;
 
 import static com.swedist.computer_lab_backend.constants.AppConstants.*;
@@ -51,9 +48,9 @@ public class ReservationController {
         String errorMessage = null;
         try {
             ComputerStudentDTO createdReservation = reservationService.createReservation(reservationPostRequest);
-            successMessage = "Reservation added successfully. id: %d".formatted(createdReservation.getId());
+            successMessage = "The reservation added successfully. id: %d".formatted(createdReservation.getId());
         } catch (Exception e) {
-            errorMessage = "Failed to add reservation";
+            errorMessage = "Failed to add the reservation";
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -67,6 +64,19 @@ public class ReservationController {
             successMessage = "The reservation updated successfully. id: %d".formatted(createdReservation.getId());
         } catch (Exception e) {
             errorMessage = "Failed to update the reservation";
+        }
+        return getRedirect(successMessage, errorMessage);
+    }
+
+    @PostMapping(value = "/{id}/delete")
+    public String deleteReservation(@PathVariable Long id) {
+        String successMessage = null;
+        String errorMessage = null;
+        try {
+            reservationService.deleteReservation(id);
+            successMessage = "The reservation deleted successfully";
+        } catch (Exception e) {
+            errorMessage = "Failed to delete the reservation";
         }
         return getRedirect(successMessage, errorMessage);
     }

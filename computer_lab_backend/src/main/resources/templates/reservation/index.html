@@ -32,17 +32,23 @@
             <td th:text="|${reservation.getDuration()} days|">{duration}</td>
             <td>
                 <button class="btn btn-primary"
-                        th:attr="onclick=|onUpdateClick(${reservation.getId()},${reservation.getStudent().getId()}, ${reservation.getComputer().getId()}, '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
+                        th:attr="onclick=|onUpdateClick(${reservation.getId()}, ${reservation.getComputer().getId()}, ${reservation.getStudent().getId()}, '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
                         data-bs-toggle="modal" data-bs-target="#updateReservation">
                     Update
                 </button>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger"
+                        th:attr="onclick=|onDeleteClick(${reservation.getId()}, '${reservation.getStudent().getName()}', '${reservation.getStudent().getDepartment()}', '${reservation.getComputer().getBrand()}', '${reservation.getComputer().getModel()}', '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
+                        data-bs-toggle="modal" data-bs-target="#deleteReservation">
+                    Delete
+                </button>
                 <button class="btn btn-secondary">Reserve</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<!-- Reservation Update Modal -->
 <div class="modal fade" id="updateReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -94,6 +100,48 @@
         </div>
     </div>
 </div>
+<!-- Reservation Update Modal -->
+
+<!-- Delete Student Modal -->
+<div class="modal fade" id="deleteReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete Reservation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteForm" th:action="@{/reservation}" method="post">
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="computerSpan">Computer</span>
+                        <input type="text" class="form-control" id="computerDeleteInput" aria-label="computerSpan"
+                               aria-describedby="computerSpan" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="studentSpan">Student</span>
+                        <input type="text" class="form-control" id="studentDeleteInput" aria-label="studentSpan"
+                               aria-describedby="studentSpan" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="dateSpan">Date</span>
+                        <input type="text" class="form-control" id="dateDeleteInput" aria-label="dateSpan" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="durationSpan">Days</span>
+                        <input type="text" class="form-control" id="durationDeleteInput" aria-label="durationSpan"
+                               disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Student Modal -->
+
 <script>
     function onUpdateClick(id, computerId, studentId, date, duration) {
         document.getElementById("reservationForm").action = "/reservation/" + id;
@@ -101,6 +149,14 @@
         document.getElementById("studentReserveInput").value = studentId;
         document.getElementById("reservationDateInput").value = date;
         document.getElementById("reservationDurationInput").value = duration;
+    }
+
+    function onDeleteClick(id, studentName, studentDepartment, computerBrand, computerModel, date, duration) {
+        document.getElementById("deleteForm").action = "/reservation/" + id + "/delete";
+        document.getElementById("computerDeleteInput").value = computerBrand + " - " + computerModel;
+        document.getElementById("studentDeleteInput").value = studentName + " - " + studentDepartment;
+        document.getElementById("dateDeleteInput").value = date;
+        document.getElementById("durationDeleteInput").value = duration;
     }
 </script>
 </body>

@@ -48,7 +48,7 @@ public class ReservationService {
         return new ComputerStudentDTO(savedComputerStudent);
     }
 
-    public ComputerStudentDTO updateReservation(Long id,ReservationPostRequest reservationPostRequest) {
+    public ComputerStudentDTO updateReservation(Long id, ReservationPostRequest reservationPostRequest) {
         Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow();
         Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow();
         ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow();
@@ -58,5 +58,13 @@ public class ReservationService {
         computerStudent.setDuration(Duration.ofDays(reservationPostRequest.getDuration()));
         ComputerStudent updatedComputerStudent = computerStudentRepository.save(computerStudent);
         return new ComputerStudentDTO(updatedComputerStudent);
+    }
+
+    public void deleteReservation(Long id)
+    {
+        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow();
+        computerStudent.getStudent().delete(computerStudent);
+        computerStudent.getComputer().delete(computerStudent);
+        computerStudentRepository.delete(computerStudent);
     }
 }
