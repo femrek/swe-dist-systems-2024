@@ -1,15 +1,13 @@
 package com.swedist.computer_lab_backend.dto;
 
 import com.swedist.computer_lab_backend.model.Computer;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ComputerDTO {
     private Long id;
     private String brand;
@@ -19,5 +17,24 @@ public class ComputerDTO {
         id = computer.getId();
         brand = computer.getBrand();
         model = computer.getModel();
+    }
+
+    public String validate() {
+        if (brand == null || brand.isBlank()) {
+            return "brand must be given";
+        }
+        if (model == null || model.isBlank()) {
+            return "model must be given";
+        }
+
+        return null;
+    }
+
+    public String toVisualString() {
+        return new StringBuilder()
+                .append(brand)
+                .append(", ")
+                .append(model)
+                .toString();
     }
 }

@@ -36,8 +36,17 @@ public class ReservationService {
     }
 
     public ComputerStudentDTO createReservation(ReservationPostRequest reservationPostRequest) {
-        Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow();
-        Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow();
+        String validationError = reservationPostRequest.validate();
+        if (validationError != null) {
+            throw new IllegalArgumentException(validationError);
+        }
+
+        Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow(
+                () -> new IllegalArgumentException("Student couldn't found with given id")
+        );
+        Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow(
+                () -> new IllegalArgumentException("Computer couldn't found with given id")
+        );
         ComputerStudent computerStudent = new ComputerStudent();
         computerStudent.setStudent(student);
         computerStudent.setComputer(computer);
@@ -49,9 +58,20 @@ public class ReservationService {
     }
 
     public ComputerStudentDTO updateReservation(Long id, ReservationPostRequest reservationPostRequest) {
-        Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow();
-        Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow();
-        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow();
+        String validationError = reservationPostRequest.validate();
+        if (validationError != null) {
+            throw new IllegalArgumentException(validationError);
+        }
+
+        Student student = studentRepository.findById(reservationPostRequest.getStudentId()).orElseThrow(
+                () -> new IllegalArgumentException("Student couldn't found with given id")
+        );
+        Computer computer = computerRepository.findById(reservationPostRequest.getComputerId()).orElseThrow(
+                () -> new IllegalArgumentException("Computer couldn't found with given id")
+        );
+        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Reservation couldn't found with given id")
+        );
         computerStudent.setStudent(student);
         computerStudent.setComputer(computer);
         computerStudent.setReservationDate(Date.valueOf(reservationPostRequest.getReservationDate()));
@@ -60,10 +80,13 @@ public class ReservationService {
         return new ComputerStudentDTO(updatedComputerStudent);
     }
 
-    public void deleteReservation(Long id) {
-        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow();
+    public ComputerStudentDTO deleteReservation(Long id) {
+        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Reservation with id could not found")
+        );
         computerStudent.getStudent().delete(computerStudent);
         computerStudent.getComputer().delete(computerStudent);
         computerStudentRepository.delete(computerStudent);
+        return new ComputerStudentDTO(computerStudent);
     }
 }

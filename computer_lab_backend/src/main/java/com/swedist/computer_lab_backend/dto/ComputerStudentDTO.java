@@ -1,10 +1,7 @@
 package com.swedist.computer_lab_backend.dto;
 
 import com.swedist.computer_lab_backend.model.ComputerStudent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ComputerStudentDTO {
     private Long id;
     private StudentDTO student;
@@ -31,5 +29,18 @@ public class ComputerStudentDTO {
     public String getDateFormatted(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(reservationDate);
+    }
+
+    public String toVisualString() {
+        return new StringBuilder()
+                .append(student.toVisualString())
+                .append(", ")
+                .append(computer.toVisualString())
+                .append(", ")
+                .append(getDateFormatted())
+                .append(", ")
+                .append(duration)
+                .append(" Days")
+                .toString();
     }
 }

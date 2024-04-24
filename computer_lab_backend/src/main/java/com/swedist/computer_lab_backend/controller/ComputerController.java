@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-
 import static com.swedist.computer_lab_backend.constants.AppConstants.*;
 
 @Controller
@@ -31,8 +29,7 @@ public class ComputerController {
                                 Model model) {
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
         model.addAttribute(STUDENT_LIST_KEY, studentService.getStudents());
-        model.addAttribute(SUCCESS_MESSAGE_KEY,
-                Objects.requireNonNullElse(successMessage, "Computer list fetched successfully"));
+        if (successMessage != null) model.addAttribute(SUCCESS_MESSAGE_KEY, successMessage);
         if (errorMessage != null) model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
         return "computer/index";
     }
@@ -43,9 +40,9 @@ public class ComputerController {
         String errorMessage = null;
         try {
             ComputerDTO createdComputer = computerService.createComputer(computerDTO);
-            successMessage = "Computer added successfully. id: %d".formatted(createdComputer.getId());
+            successMessage = "Computer added successfully: %s".formatted(createdComputer.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to add computer";
+            errorMessage = "Failed to add computer: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -57,9 +54,9 @@ public class ComputerController {
         try {
             computerDTO.setId(id);
             ComputerDTO updatedComputer = computerService.updateComputer(computerDTO);
-            successMessage = "Computer updated successfully. id: %d".formatted(updatedComputer.getId());
+            successMessage = "Computer updated successfully: %s".formatted(updatedComputer.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to update computer. id: %d".formatted(computerDTO.getId());
+            errorMessage = "Failed to update computer: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -69,10 +66,10 @@ public class ComputerController {
         String successMessage = null;
         String errorMessage = null;
         try {
-            computerService.deleteComputer(id);
-            successMessage = "Computer deleted successfully. id: %d".formatted(id);
+            ComputerDTO deletedComputer = computerService.deleteComputer(id);
+            successMessage = "Computer deleted successfully: %s".formatted(deletedComputer.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to delete computer. id: %d".formatted(id);
+            errorMessage = "Failed to delete computer: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }

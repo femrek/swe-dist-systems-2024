@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-
 import static com.swedist.computer_lab_backend.constants.AppConstants.*;
 
 @Controller
@@ -30,8 +28,7 @@ public class StudentController {
                                Model model) {
         model.addAttribute(STUDENT_LIST_KEY, studentService.getStudents());
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
-        model.addAttribute(SUCCESS_MESSAGE_KEY,
-                Objects.requireNonNullElse(successMessage, "Student list fetched successfully"));
+        if (successMessage != null) model.addAttribute(SUCCESS_MESSAGE_KEY, successMessage);
         if (errorMessage != null) model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
         return "student/index";
     }
@@ -42,9 +39,9 @@ public class StudentController {
         String errorMessage = null;
         try {
             StudentDTO createdStudent = studentService.createStudent(studentDTO);
-            successMessage = "Student added successfully. id: %d".formatted(createdStudent.getId());
+            successMessage = "Student added successfully: %s".formatted(createdStudent.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to add student";
+            errorMessage = "Failed to add student: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -56,9 +53,9 @@ public class StudentController {
         try {
             studentDTO.setId(id);
             StudentDTO updateStudent = studentService.updateStudent(studentDTO);
-            successMessage = "Student updated successfully. id: %d".formatted(updateStudent.getId());
+            successMessage = "Student updated successfully: %s".formatted(updateStudent.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to update student. id: %d".formatted(studentDTO.getId());
+            errorMessage = "Failed to update student: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -68,10 +65,10 @@ public class StudentController {
         String successMessage = null;
         String errorMessage = null;
         try {
-            studentService.deleteStudent(id);
-            successMessage = "Student deleted successfully. id: %d".formatted(id);
+            StudentDTO deletedStudent = studentService.deleteStudent(id);
+            successMessage = "Student deleted successfully: %s".formatted(deletedStudent.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to delete student. id: %d".formatted(id);
+            errorMessage = "Failed to delete student: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }

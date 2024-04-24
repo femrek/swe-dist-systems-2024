@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.Objects;
 
 import static com.swedist.computer_lab_backend.constants.AppConstants.*;
 
@@ -36,8 +35,7 @@ public class ReservationController {
         model.addAttribute(STUDENT_LIST_KEY, studentService.getStudents());
         model.addAttribute(COMPUTER_LIST_KEY, computerService.getComputers());
         model.addAttribute(RESERVATION_LIST_KEY, reservationService.getReservations());
-        model.addAttribute(SUCCESS_MESSAGE_KEY,
-                Objects.requireNonNullElse(successMessage, "Reservation list fetched successfully"));
+        if (successMessage != null) model.addAttribute(SUCCESS_MESSAGE_KEY, successMessage);
         if (errorMessage != null) model.addAttribute(ERROR_MESSAGE_KEY, errorMessage);
         return "reservation/index";
     }
@@ -48,9 +46,9 @@ public class ReservationController {
         String errorMessage = null;
         try {
             ComputerStudentDTO createdReservation = reservationService.createReservation(reservationPostRequest);
-            successMessage = "The reservation added successfully. id: %d".formatted(createdReservation.getId());
+            successMessage = "The reservation added successfully: %s".formatted(createdReservation.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to add the reservation";
+            errorMessage = "Failed to add the reservation: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -60,10 +58,10 @@ public class ReservationController {
         String successMessage = null;
         String errorMessage = null;
         try {
-            ComputerStudentDTO createdReservation = reservationService.updateReservation(id, reservationPostRequest);
-            successMessage = "The reservation updated successfully. id: %d".formatted(createdReservation.getId());
+            ComputerStudentDTO updatedReservation = reservationService.updateReservation(id, reservationPostRequest);
+            successMessage = "The reservation updated successfully: %s".formatted(updatedReservation.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to update the reservation";
+            errorMessage = "Failed to update the reservation: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
@@ -73,10 +71,10 @@ public class ReservationController {
         String successMessage = null;
         String errorMessage = null;
         try {
-            reservationService.deleteReservation(id);
-            successMessage = "The reservation deleted successfully";
+            ComputerStudentDTO deletedReservation = reservationService.deleteReservation(id);
+            successMessage = "The reservation deleted successfully: %s".formatted(deletedReservation.toVisualString());
         } catch (Exception e) {
-            errorMessage = "Failed to delete the reservation";
+            errorMessage = "Failed to delete the reservation: %s".formatted(e.getMessage());
         }
         return getRedirect(successMessage, errorMessage);
     }
