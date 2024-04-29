@@ -27,4 +27,6 @@ public class ComputerStudent {
     private Date reservationDate;
 
     private Duration duration;
+
+    private Boolean isReturned;
 }
