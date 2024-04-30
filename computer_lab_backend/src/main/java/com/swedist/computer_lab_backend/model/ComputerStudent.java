@@ -28,5 +28,5 @@ public class ComputerStudent {
 
     private Duration duration;
 
-    private Boolean isReturned;
+    private Boolean isReturned = false;
 }

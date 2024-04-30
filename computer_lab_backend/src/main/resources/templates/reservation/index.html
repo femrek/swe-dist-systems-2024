@@ -34,9 +34,12 @@
             <td class="bg-success text-center text-white fs-4" th:if="${reservation.getIsReturned()}">Yes</td>
             <td class="bg-danger text-center text-white fs-4" th:if="${!reservation.getIsReturned()}">No</td>
             <td>
-                <button class="btn btn-success"
+                <button class="btn btn-success" th:if="${!reservation.getIsReturned()}"
                         th:attr="onclick=|onReturnReserveClick(${reservation.getId()})|"
-                        data-bs-toggle="modal" data-bs-target="#returnReservation">return
+                        data-bs-toggle="modal" data-bs-target="#returnReservation">Return
+                </button>
+                <button class="btn btn-success" th:if="${reservation.getIsReturned()}" disabled>
+                    Return
                 </button>
                 <button class="btn btn-primary"
                         th:attr="onclick=|onUpdateClick(${reservation.getId()}, ${reservation.getComputer().getId()}, ${reservation.getStudent().getId()}, '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
