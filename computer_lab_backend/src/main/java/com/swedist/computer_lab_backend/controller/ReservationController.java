@@ -79,6 +79,19 @@ public class ReservationController {
         return getRedirect(successMessage, errorMessage);
     }
 
+    @PostMapping("/{id}/return")
+    public String returnDevice(@PathVariable("id") Long id){
+        String successMessage = null;
+        String errorMessage = null;
+        try {
+            ComputerStudentDTO deletedReservation = reservationService.returnReservation(id);
+            successMessage = "The reservation marked as returned successfully: %s".formatted(deletedReservation.toVisualString());
+        } catch (Exception e) {
+            errorMessage = "Failed to return the reservation: %s".formatted(e.getMessage());
+        }
+        return getRedirect(successMessage, errorMessage);
+    }
+
     private String getRedirect(String successMessage, String errorMessage) {
         StringBuilder redirectUrl = new StringBuilder("redirect:/reservation/");
         if (errorMessage != null || successMessage != null) redirectUrl.append("?");

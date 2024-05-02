@@ -19,6 +19,7 @@
             <th>Computer</th>
             <th>Start</th>
             <th>Duration</th>
+            <th>isReturned?</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -30,7 +31,16 @@
             </td>
             <td th:text="${reservation.getDateFormatted()}">{start}</td>
             <td th:text="|${reservation.getDuration()} days|">{duration}</td>
+            <td class="bg-success text-center text-white fs-4" th:if="${reservation.getIsReturned()}">Yes</td>
+            <td class="bg-danger text-center text-white fs-4" th:if="${!reservation.getIsReturned()}">No</td>
             <td>
+                <button class="btn btn-success" th:if="${!reservation.getIsReturned()}"
+                        th:attr="onclick=|onReturnReserveClick(${reservation.getId()})|"
+                        data-bs-toggle="modal" data-bs-target="#returnReservation">Return
+                </button>
+                <button class="btn btn-success" th:if="${reservation.getIsReturned()}" disabled>
+                    Return
+                </button>
                 <button class="btn btn-primary"
                         th:attr="onclick=|onUpdateClick(${reservation.getId()}, ${reservation.getComputer().getId()}, ${reservation.getStudent().getId()}, '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
                         data-bs-toggle="modal" data-bs-target="#updateReservation">
@@ -45,6 +55,7 @@
                         th:attr="onclick=|onReReserveClick(${reservation.getId()}, ${reservation.getComputer().getId()}, ${reservation.getStudent().getId()}, '${reservation.getDateFormatted()}', ${reservation.getDuration()})|"
                         data-bs-toggle="modal" data-bs-target="#reReservation">Reserve
                 </button>
+
             </td>
         </tr>
         </tbody>
@@ -200,6 +211,25 @@
 </div>
 <!-- Reservation Update Modal -->
 
+<!-- Reservation Return Modal -->
+<div class="modal fade" id="returnReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Do you want to return the reservation ?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="returnReservationForm" th:action="@{/reservation}" method="post">
+                <div class="modal-body">
+                    <button type="submit" class="btn btn-success">Yes</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Reservation Return Modal -->
+
 <script>
     function onUpdateClick(id, computerId, studentId, date, duration) {
         document.getElementById("reservationForm").action = "/reservation/" + id;
@@ -222,6 +252,10 @@
         document.getElementById("studentReReserveInput").value = studentId;
         document.getElementById("reReservationDateInput").value = date;
         document.getElementById("reReservationDurationInput").value = duration;
+    }
+
+    function onReturnReserveClick(id) {
+        document.getElementById("returnReservationForm").action = "/reservation/" + id + "/return";
     }
 </script>
 </body>

@@ -17,6 +17,7 @@ public class ComputerStudentDTO {
     private ComputerDTO computer;
     private Date reservationDate;
     private Long duration;
+    private Boolean isReturned;
 
     public ComputerStudentDTO(ComputerStudent computerStudent) {
         id = computerStudent.getId();
@@ -24,6 +25,7 @@ public class ComputerStudentDTO {
         computer = new ComputerDTO(computerStudent.getComputer());
         reservationDate = computerStudent.getReservationDate();
         duration = computerStudent.getDuration().toDays();
+        isReturned = computerStudent.getIsReturned();
     }
 
     public String getDateFormatted(){

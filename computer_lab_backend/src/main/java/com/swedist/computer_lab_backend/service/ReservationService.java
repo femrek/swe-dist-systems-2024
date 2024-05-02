@@ -89,4 +89,13 @@ public class ReservationService {
         computerStudentRepository.delete(computerStudent);
         return new ComputerStudentDTO(computerStudent);
     }
+
+    public ComputerStudentDTO returnReservation(Long id){
+        ComputerStudent computerStudent = computerStudentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("Reservation with id could not found")
+        );
+        computerStudent.setIsReturned(true);
+        computerStudentRepository.save(computerStudent);
+        return new ComputerStudentDTO(computerStudent);
+    }
 }
