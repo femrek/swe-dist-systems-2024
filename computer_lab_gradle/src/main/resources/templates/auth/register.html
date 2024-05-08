@@ -1,62 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body>
 
-<form onsubmit="submitLogin()">
+<form onsubmit="submitRegister()">
     <label for="username">Username:</label><br>
     <input type="text" id="username" name="username"><br>
 
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password"><br><br>
 
-    <input type="submit" value="Login">
+    <label for="fullName">Full Name:</label><br>
+    <input type="text" id="fullName" name="fullName"><br><br>
+
+    <input type="submit" value="Register">
 </form>
 
 <script>
-    function submitLogin() {
-        event.preventDefault();
+    function submitRegister() {
+        event.preventDefault(); // Prevent the default form submission
 
-        // Get the values of username and password fields
+        // Get the values of input fields
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
+        let fullName = document.getElementById("fullName").value;
 
         // Create an object with the data to be sent in the request body
         let data = {
             username: username,
-            password: password
+            password: password,
+            fullName: fullName
         };
 
-        // Make a POST request to the login endpoint
-        fetch('/api/auth/login', {
+        // Make a POST request to the register endpoint
+        fetch('/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
-            .then(async response => {
+            .then(response => {
+                // Handle the response
                 if (response.ok) {
-                    let res_json = await response.json();
-                    localStorage.setItem("accessToken", res_json.token);
-                    setAuthorizationHeader(res_json.token);
+                    // Success message
+                    console.log('Registration successful');
                     window.location.href = '/';
                 } else {
-                    console.error('Login failed');
+                    // Handle the error
+                    console.error('Registration failed');
                 }
             })
             .catch(error => {
+                // Handle any error that occurs during the request
                 console.error('Error:', error);
             });
-
-        function setAuthorizationHeader(token) {
-            document.cookie = "authorization=" + token; // Store authorization string
-        }
     }
 </script>
-
 </body>
 </html>
