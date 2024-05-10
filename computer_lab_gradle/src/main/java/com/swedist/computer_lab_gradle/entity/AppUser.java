@@ -31,9 +31,15 @@ public class AppUser implements UserDetails {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "department")
+    private String department;
+
     @Column(name = "role")
     @Enumerated(EnumType.ORDINAL)
     private Set<AppRole> roles;
+
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = ComputerStudent.class, mappedBy = "student", cascade = CascadeType.ALL)
+    private Set<ComputerStudent> reservations;
 
 
     @Override

@@ -15,11 +15,23 @@ public class UserDTO {
     private String username;
     private String fullName;
     private List<String> roles;
+    private String department;
 
     public UserDTO(AppUser appUser) {
         this.id = appUser.getId();
         this.username = appUser.getUsername();
         this.fullName = appUser.getFullName();
+        this.department = appUser.getDepartment();
         this.roles = appUser.getRoles().stream().map(Enum::name).toList();
+    }
+
+    public String toVisualString() {
+        return new StringBuilder()
+                .append(username)
+                .append(", ")
+                .append(fullName)
+                .append(", ")
+                .append(department)
+                .toString();
     }
 }

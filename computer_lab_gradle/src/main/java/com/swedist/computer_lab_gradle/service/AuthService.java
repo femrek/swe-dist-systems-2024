@@ -28,7 +28,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .fullName(request.getFullName())
-                .roles(Set.of(AppRole.USER))
+                .roles(Set.of(AppRole.STUDENT))
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user.getUsername());
