@@ -3,6 +3,7 @@ package com.swedist.computer_lab_gradle.service;
 import com.swedist.computer_lab_gradle.dto.AuthenticationRequest;
 import com.swedist.computer_lab_gradle.dto.AuthenticationResponse;
 import com.swedist.computer_lab_gradle.dto.RegisterRequest;
+import com.swedist.computer_lab_gradle.dto.UserDTO;
 import com.swedist.computer_lab_gradle.entity.AppRole;
 import com.swedist.computer_lab_gradle.entity.AppUser;
 import com.swedist.computer_lab_gradle.repository.UserRepository;
@@ -11,9 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -50,5 +49,16 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public UserDTO findUserByAuth(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return new UserDTO();
+        } else {
+            String jwt = authHeader.substring(7);
+            String username = jwtService.extractUsername(jwt);
+            AppUser user = userRepository.findByUsername(username).orElseThrow();
+            return new UserDTO(user);
+        }
     }
 }

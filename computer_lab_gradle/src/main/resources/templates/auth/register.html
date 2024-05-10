@@ -3,21 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link rel="stylesheet" href="/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.js"></script>
 </head>
 <body>
+<div class="container">
+    <div th:insert="component/header :: header"></div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <br>
+            <h4 class="display-3">Register</h4>
+            <br>
+            <br>
+            <form onsubmit="submitRegister()">
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Username:</span>
+                    <input type="text" id="username" name="username" aria-label="username"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
 
-<form onsubmit="submitRegister()">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Password:</span>
+                    <input type="password" id="password" name="password" aria-label="password"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
 
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Full Name:</span>
+                    <input type="text" id="fullName" name="fullName" aria-label="fullName"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
 
-    <label for="fullName">Full Name:</label><br>
-    <input type="text" id="fullName" name="fullName"><br><br>
-
-    <input type="submit" value="Register">
-</form>
+                <input type="submit" value="Register" class="btn btn-primary input-group">
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
 
 <script>
     function submitRegister() {

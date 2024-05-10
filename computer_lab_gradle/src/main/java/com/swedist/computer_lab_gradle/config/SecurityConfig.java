@@ -40,8 +40,16 @@ public class SecurityConfig {
                                          AuthenticationProvider authenticationProvider) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        // api
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+
+                        // mvc
+                        .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/").permitAll()
+
+                        // static
+                        .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement((sessionManagement) ->
