@@ -10,14 +10,16 @@
     <script src="/js/bootstrap.js"></script>
 </head>
 <body>
+<div th:insert="component/header :: header"></div>
+
 <div class="container">
-    <div th:insert="component/header :: header"></div>
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <br>
             <h4 class="display-3">Login</h4>
             <br>
+            <div th:insert="component/popup_message :: popup_message"></div>
             <br>
             <form onsubmit="submitLogin()">
                 <div class="input-group mb-4">
@@ -32,7 +34,7 @@
                            aria-describedby="basic-addon1" class="form-control">
                 </div>
 
-                <input type="submit" value="Login" class="btn btn-primary input-group">
+                <input type="submit" value="Login" class="btn btn-primary input-group mb-4">
             </form>
         </div>
         <div class="col-md-3"></div>
@@ -67,13 +69,13 @@
                     localStorage.setItem("accessToken", res_json.token);
                     window.location.href = '/';
                 } else {
-                    console.error('Login failed');
+                    showError('Error: ' + response.status + ' ' + response.statusText);
                 }
             })
             .catch(error => {
+                showError(error)
                 console.error('Error:', error);
             });
-
     }
 </script>
 

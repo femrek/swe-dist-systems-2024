@@ -10,20 +10,21 @@
     <script src="/js/bootstrap.js"></script>
 </head>
 <body>
+<div th:insert="component/header :: header"></div>
 <div class="container">
-    <div th:insert="component/header :: header"></div>
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <br>
             <h4 class="display-3">Register</h4>
             <br>
+            <div th:insert="component/popup_message :: popup_message"></div>
             <br>
             <form onsubmit="submitRegister()">
                 <div class="input-group mb-4">
                     <span class="input-group-text">Username:</span>
                     <input type="text" id="username" name="username" aria-label="username"
-                           aria-describedby="basic-addon1" class="form-control">
+                           aria-describedby="basic-addon1" class="form-control" required>
                 </div>
 
                 <div class="input-group mb-4">
@@ -44,7 +45,7 @@
                            aria-describedby="basic-addon1" class="form-control">
                 </div>
 
-                <input type="submit" value="Register" class="btn btn-primary input-group">
+                <input type="submit" value="Register" class="btn btn-primary input-group mb-4">
             </form>
         </div>
         <div class="col-md-3"></div>
@@ -78,21 +79,28 @@
             body: JSON.stringify(data)
         })
             .then(response => {
-                // Handle the response
                 if (response.ok) {
-                    // Success message
-                    console.log('Registration successful');
-                    window.location.href = '/';
+                    showSuccessMessageAndRedirect(5);
                 } else {
-                    // Handle the error
-                    console.error('Registration failed');
+                    showError('Registration failed ' + response.status + ' ' + response.statusText);
                 }
             })
             .catch(error => {
-                // Handle any error that occurs during the request
+                showError(error);
                 console.error('Error:', error);
             });
     }
+
+    function showSuccessMessageAndRedirect(second) {
+        showSuccess('Registration successful. redirecting to home page in ' + second + ' seconds');
+        setTimeout(function () {
+            showSuccessMessageAndRedirect(second - 1);
+        }, 1000);
+        if (second === 0) {
+            window.location.href = '/';
+        }
+    }
+
 </script>
 </body>
 </html>
