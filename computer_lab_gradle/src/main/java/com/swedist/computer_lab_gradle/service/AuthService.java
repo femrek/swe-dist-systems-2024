@@ -28,6 +28,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .fullName(request.getFullName())
+                .department(request.getDepartment())
                 .roles(Set.of(AppRole.STUDENT))
                 .build();
         userRepository.save(user);

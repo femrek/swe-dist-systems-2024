@@ -38,6 +38,12 @@
                            aria-describedby="basic-addon1" class="form-control">
                 </div>
 
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Department:</span>
+                    <input type="text" id="department" name="department" aria-label="department"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
+
                 <input type="submit" value="Register" class="btn btn-primary input-group">
             </form>
         </div>
@@ -53,12 +59,14 @@
         let username = document.getElementById("username").value;
         let password = document.getElementById("password").value;
         let fullName = document.getElementById("fullName").value;
+        let department = document.getElementById("department").value;
 
         // Create an object with the data to be sent in the request body
         let data = {
             username: username,
             password: password,
-            fullName: fullName
+            fullName: fullName,
+            department: department
         };
 
         // Make a POST request to the register endpoint
