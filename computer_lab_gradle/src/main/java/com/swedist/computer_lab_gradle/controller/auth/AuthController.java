@@ -1,4 +1,4 @@
-package com.swedist.computer_lab_gradle.controller;
+package com.swedist.computer_lab_gradle.controller.auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

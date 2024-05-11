@@ -11,8 +11,10 @@
                href="/auth/login">Login</a>
             <a id="btn-register" class="flex-column align-content-center btn btn-primary fs-5"
                href="/auth/register">Register</a>
-            <a id="btn-user" hidden="hidden" class="flex-column align-content-center btn btn-primary fs-5"></a>
-            <a id="btn-logout" hidden="hidden" onclick="logout()" class="flex-column align-content-center btn btn-primary fs-5">Logout</a>
+            <a id="btn-user" hidden="hidden" class="flex-column align-content-center btn btn-primary fs-5"
+               href="/user"></a>
+            <a id="btn-logout" hidden="hidden" onclick="logout()"
+               class="flex-column align-content-center btn btn-primary fs-5">Logout</a>
         </div>
     </div>
     <div th:if="${successMessage != null}">

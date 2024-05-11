@@ -1,4 +1,4 @@
-package com.swedist.computer_lab_gradle.controller;
+package com.swedist.computer_lab_gradle.controller.auth;
 
 import com.swedist.computer_lab_gradle.dto.AuthenticationRequest;
 import com.swedist.computer_lab_gradle.dto.AuthenticationResponse;

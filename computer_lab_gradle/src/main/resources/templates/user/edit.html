@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLM | Edit User</title>
+    <link rel="stylesheet" href="/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+<div th:insert="component/header :: header"></div>
+
+<div class="container">
+    <div th:insert="component/popup_message :: popup_message"></div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <br>
+            <h4 class="display-3">Edit User</h4>
+            <br>
+            <div th:insert="component/popup_message :: popup_message"></div>
+            <br>
+            <form onsubmit="submitEdit()">
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Username:</span>
+                    <input type="text" id="username" name="username" aria-label="username"
+                           aria-describedby="basic-addon1" class="form-control" required>
+                </div>
+
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Password:</span>
+                    <input type="password" id="password" name="password" aria-label="password"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
+
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Full Name:</span>
+                    <input type="text" id="fullName" name="fullName" aria-label="fullName"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
+
+                <div class="input-group mb-4">
+                    <span class="input-group-text">Department:</span>
+                    <input type="text" id="department" name="department" aria-label="department"
+                           aria-describedby="basic-addon1" class="form-control">
+                </div>
+
+                <input type="submit" value="Edit" class="btn btn-primary input-group mb-4">
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+</body>
+</html>

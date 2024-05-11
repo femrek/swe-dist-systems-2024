@@ -46,6 +46,7 @@ public class SecurityConfig {
 
                         // mvc
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/").permitAll()
 
                         // static
