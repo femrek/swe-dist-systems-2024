@@ -20,10 +20,11 @@
                 <br>
                 <a class="btn btn-primary">Upload Profile Picture</a>
                 <br>
-                <a class="btn btn-primary" href="/user/edit">Edit Information</a>
+                <a class="btn btn-primary" href="/user/edit">Edit User Details</a>
+                <a class="btn btn-primary" href="/user/edit">Change Password</a>
             </div>
             <div class="col">
-                <p id="user-prop-name">Full Name</pi>
+                <p id="user-prop-name">Full Name</p>
                 <p id="user-prop-username">Username</p>
                 <p id="user-prop-department">Department</p>
                 <p id="user-prop-roles">Roles</p>
@@ -32,32 +33,15 @@
     </div>
 </div>
 
+<script src="/js/app-script.js"></script>
 <script>
     function fetchUserData() {
-        let token = localStorage.getItem('accessToken');
-        if (token === null) {
-            return;
-        }
-
-        fetch('/api/auth/user', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
+        getUser().then(data => {
+            document.getElementById('user-prop-name').innerText = 'Full Name: ' + data.fullName;
+            document.getElementById('user-prop-username').innerText = 'Username: ' + data.username;
+            document.getElementById('user-prop-department').innerText = 'Department: ' + data.department;
+            document.getElementById('user-prop-roles').innerText = 'Roles: ' + data.roles;
         })
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(data => {
-                        document.getElementById('user-prop-name').innerText = 'Full Name: ' + data.fullName;
-                        document.getElementById('user-prop-username').innerText = 'Username: ' + data.username;
-                        document.getElementById('user-prop-department').innerText = 'Department: ' + data.department;
-                        document.getElementById('user-prop-roles').innerText = 'Roles: ' + data.roles;
-                    });
-                } else {
-                    showError('Failed to fetch user data: ' + response.status + ' ' + response.statusText);
-                }
-            })
             .catch(error => {
                 showError('Failed to fetch user data: ' + error);
             });

@@ -16,4 +16,7 @@ public class UserController {
     public String editPage() {
         return "user/edit";
     }
+
+    @GetMapping("/changePassword")
+    public String changePasswordPage() { return "user/change_password"; }
 }
