@@ -49,12 +49,17 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/computer/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/computer/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/computer/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/student/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/student/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/student/**").hasAuthority("ADMIN")
 
                         // mvc
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
                         .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/computer/**").permitAll()
+                        .requestMatchers("/student/**").permitAll()
 
                         // static
                         .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**").permitAll()

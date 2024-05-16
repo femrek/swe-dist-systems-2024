@@ -9,12 +9,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream().map(UserDTO::new).toList();
+    }
 
     public UserDTO updateUser(UserUpdateRequest userUpdateRequest, Long userId) {
         AppUser user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found")); //todo handle exception
@@ -34,5 +39,9 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(passwordUpdateRequest.getNewPassword()));
         userRepository.save(user);
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 }

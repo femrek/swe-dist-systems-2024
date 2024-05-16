@@ -2,7 +2,7 @@ package com.swedist.computer_lab_gradle.service;
 
 import com.swedist.computer_lab_gradle.dto.request.AuthenticationRequest;
 import com.swedist.computer_lab_gradle.dto.AuthenticationResponse;
-import com.swedist.computer_lab_gradle.dto.request.RegisterRequest;
+import com.swedist.computer_lab_gradle.dto.request.UserCreateRequest;
 import com.swedist.computer_lab_gradle.dto.UserDTO;
 import com.swedist.computer_lab_gradle.entity.AppRole;
 import com.swedist.computer_lab_gradle.entity.AppUser;
@@ -23,7 +23,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public UserDTO register(UserCreateRequest request) {
         var user = AppUser.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -31,11 +31,7 @@ public class AuthService {
                 .department(request.getDepartment())
                 .roles(Set.of(AppRole.STUDENT))
                 .build();
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user.getUsername());
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+        return new UserDTO(userRepository.save(user));
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -62,18 +58,4 @@ public class AuthService {
             return new UserDTO(user);
         }
     }
-
-//    public void updateUser(RegisterRequest request) {
-//        // Find the existing user by username
-//        AppUser existingUser = userRepository.findByUsername(request.getUsername())
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        // Update the existing user's properties
-//        existingUser.setPassword(passwordEncoder.encode(request.getPassword()));
-//        existingUser.setFullName(request.getFullName());
-//        existingUser.setDepartment(request.getDepartment());
-//
-//        // Save the updated user
-//        userRepository.save(existingUser);
-//    }
 }

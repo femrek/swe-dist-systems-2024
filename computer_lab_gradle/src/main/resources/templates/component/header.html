@@ -4,8 +4,10 @@
         <div class="d-flex flex-wrap align-content-center container">
             <a class="flex-column btn fs-2 text-white" href="/">CLM</a>
             <a class="flex-column align-content-center btn btn-primary fs-5" href="/computer">Computers</a>
-            <a class="flex-column align-content-center btn btn-primary fs-5" href="/student">Students</a>
-            <a class="flex-column me-auto align-content-center btn btn-primary fs-5" href="/reservation">Reservations</a>
+            <a class="flex-column align-content-center btn btn-primary fs-5 admin-only-element"
+               href="/student">Students</a>
+            <a class="flex-column me-auto align-content-center btn btn-primary fs-5"
+               href="/reservation">Reservations</a>
 
             <a id="btn-login" class="flex-column align-content-center btn btn-primary fs-5"
                href="/auth/login">Login</a>
@@ -52,6 +54,8 @@
 
         function logout() {
             localStorage.removeItem('accessToken');
+            localStorage.removeItem('user');
+            hideAdminOnlyElements();
             window.location.href = '/';
         }
 
@@ -59,4 +63,3 @@
         validateLogin();
     </script>
 </div>
-

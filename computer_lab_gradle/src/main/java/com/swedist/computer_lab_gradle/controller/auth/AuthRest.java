@@ -2,7 +2,7 @@ package com.swedist.computer_lab_gradle.controller.auth;
 
 import com.swedist.computer_lab_gradle.dto.request.AuthenticationRequest;
 import com.swedist.computer_lab_gradle.dto.AuthenticationResponse;
-import com.swedist.computer_lab_gradle.dto.request.RegisterRequest;
+import com.swedist.computer_lab_gradle.dto.request.UserCreateRequest;
 import com.swedist.computer_lab_gradle.dto.UserDTO;
 import com.swedist.computer_lab_gradle.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,8 @@ public class AuthRest {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        AuthenticationResponse response = authService.register(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<UserDTO> register(@RequestBody UserCreateRequest request) {
+        return ResponseEntity.ok(authService.register(request));
     }
 
     @GetMapping("/user")

@@ -92,6 +92,33 @@ async function getUser() {
     }
 
     let user = await getRequest('/api/auth/user');
+
     localStorage.setItem('user', JSON.stringify(user));
+    hideAdminOnlyElements();
+
     return user;
 }
+
+function hideAdminOnlyElements() {
+    let user = localStorage.getItem('user');
+    if (user !== null && user !== undefined && user !== '') {
+        let roles = JSON.parse(user).roles;
+        if (roles.includes('ADMIN')) {
+            // show if it is admin
+            let buttons = document.getElementsByClassName('admin-only-element');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].style.display = 'inline-block';
+            }
+
+            return;
+        }
+    }
+
+    // hide if it is not admin or it is null
+    let buttons = document.getElementsByClassName('admin-only-element');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.display = 'none';
+    }
+}
+
+hideAdminOnlyElements();

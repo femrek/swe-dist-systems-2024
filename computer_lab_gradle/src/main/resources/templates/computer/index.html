@@ -14,10 +14,10 @@
 <div th:insert="component/header :: header"></div>
 <div class="container">
     <div th:insert="component/popup_message :: popup_message"></div>
-    <button class="btn btn-primary admin-only-button" data-bs-toggle="modal" data-bs-target="#addComputer">Add
+    <button class="btn btn-primary admin-only-element" data-bs-toggle="modal" data-bs-target="#addComputer">Add
         Computer
     </button>
-    <br><br>
+    <br class="admin-only-element"><br class="admin-only-element">
     <table class="table">
         <thead>
         <tr>
@@ -176,17 +176,7 @@
 
 <script src="/js/app-script.js"></script>
 <script>
-    function hideButtons() {
-        let user = localStorage.getItem('user');
-        let roles = JSON.parse(user).roles;
-        if (roles.includes('ADMIN')) return;
-
-        // hide if it is not admin
-        let buttons = document.getElementsByClassName('admin-only-button');
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].style.display = 'none';
-        }
-    }
+    hideAdminOnlyElements();
 
     function fetchComputers() {
         getRequest('/api/computer')
@@ -200,14 +190,14 @@
                         <td>${computer.brand}</td>
                         <td>${computer.model}</td>
                         <td>
-                            <button class="btn btn-primary admin-only-button" onclick="onUpdateClick(${computer.id},'${computer.brand}','${computer.model}')" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
-                            <button class="btn btn-danger admin-only-button" onclick="onDeleteClick(${computer.id},'${computer.brand}','${computer.model}')" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
-                            <button class="btn btn-secondary" onclick="onReserveClick(${computer.id},'${computer.brand}','${computer.model}')" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve</button>
+                            <button class="btn btn-primary admin-only-element" onclick="onUpdateClick(${computer.id},'${computer.brand}','${computer.model}')" data-bs-toggle="modal" data-bs-target="#updateComputer">Update</button>
+                            <button class="btn btn-danger admin-only-element" onclick="onDeleteClick(${computer.id},'${computer.brand}','${computer.model}')" data-bs-toggle="modal" data-bs-target="#deleteComputer">Delete</button>
+                            <button class="btn btn-warning" onclick="onReserveClick(${computer.id},'${computer.brand}','${computer.model}')" data-bs-toggle="modal" data-bs-target="#reservationComputer">Reserve</button>
                         </td>
                     `;
                     computerTable.appendChild(row);
                 });
-                hideButtons();
+                hideAdminOnlyElements();
             })
             .catch(error => {
                 console.error('Error:', error);
