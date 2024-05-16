@@ -45,11 +45,16 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                         .requestMatchers("/api/user/**").authenticated()
                         .requestMatchers("/api/user/password/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/computer/**").hasAnyAuthority("ADMIN", "STUDENT")
+                        .requestMatchers(HttpMethod.POST, "/api/computer/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/computer/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/computer/**").hasAuthority("ADMIN")
 
                         // mvc
+                        .requestMatchers("/").permitAll()
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/computer/**").permitAll()
 
                         // static
                         .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**").permitAll()

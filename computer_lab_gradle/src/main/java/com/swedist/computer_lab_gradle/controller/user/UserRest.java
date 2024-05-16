@@ -1,7 +1,7 @@
 package com.swedist.computer_lab_gradle.controller.user;
 
-import com.swedist.computer_lab_gradle.dto.PasswordUpdateRequest;
-import com.swedist.computer_lab_gradle.dto.UserUpdateRequest;
+import com.swedist.computer_lab_gradle.dto.request.PasswordUpdateRequest;
+import com.swedist.computer_lab_gradle.dto.request.UserUpdateRequest;
 import com.swedist.computer_lab_gradle.dto.UserDTO;
 import com.swedist.computer_lab_gradle.service.UserService;
 import lombok.RequiredArgsConstructor;

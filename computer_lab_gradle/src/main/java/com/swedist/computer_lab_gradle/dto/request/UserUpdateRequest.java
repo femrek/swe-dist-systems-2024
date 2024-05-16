@@ -1,4 +1,4 @@
-package com.swedist.computer_lab_gradle.dto;
+package com.swedist.computer_lab_gradle.dto.request;
 
 import lombok.*;
 
