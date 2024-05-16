@@ -62,4 +62,18 @@ public class AuthService {
             return new UserDTO(user);
         }
     }
+
+//    public void updateUser(RegisterRequest request) {
+//        // Find the existing user by username
+//        AppUser existingUser = userRepository.findByUsername(request.getUsername())
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // Update the existing user's properties
+//        existingUser.setPassword(passwordEncoder.encode(request.getPassword()));
+//        existingUser.setFullName(request.getFullName());
+//        existingUser.setDepartment(request.getDepartment());
+//
+//        // Save the updated user
+//        userRepository.save(existingUser);
+//    }
 }

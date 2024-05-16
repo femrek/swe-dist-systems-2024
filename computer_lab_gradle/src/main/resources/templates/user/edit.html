@@ -26,13 +26,7 @@
                 <div class="input-group mb-4">
                     <span class="input-group-text">Username:</span>
                     <input type="text" id="username" name="username" aria-label="username"
-                           aria-describedby="basic-addon1" class="form-control" required>
-                </div>
-
-                <div class="input-group mb-4">
-                    <span class="input-group-text">Password:</span>
-                    <input type="password" id="password" name="password" aria-label="password"
-                           aria-describedby="basic-addon1" class="form-control">
+                           aria-describedby="basic-addon1" class="form-control" disabled>
                 </div>
 
                 <div class="input-group mb-4">
@@ -54,5 +48,84 @@
     </div>
 </div>
 
+<script src="/js/app-script.js"></script>
+<script>
+    function fetchUserData() {
+        getUser().then(data => {
+            document.getElementById('fullName').value = data.fullName;
+            document.getElementById('username').value = data.username;
+            document.getElementById('department').value = data.department;
+            })
+            .catch(error => {
+                showError('Failed to fetch user data: ' + error);
+            });
+    }
+
+    fetchUserData();
+
+    function submitEdit() {
+        event.preventDefault(); // Prevent the default form submission
+
+        let token = localStorage.getItem('accessToken');
+        if (token === null) {
+            showError('You are not logged in');
+            return;
+        }
+
+        let rawUser = localStorage.getItem('user');
+        if (rawUser === null) {
+            showError('User not found');
+            return;
+        }
+        let user = JSON.parse(rawUser);
+        if (user.id === null) {
+            showError('User id not found');
+            return;
+        }
+
+        // Get the values of input fields
+        let fullName = document.getElementById("fullName").value;
+        let department = document.getElementById("department").value;
+
+        // Create an object with the data to be sent in the request body
+        let data = {
+            fullName: fullName,
+            department: department
+        };
+
+        data.password = data.password === '' ? null : data.password;
+
+        // Make a POST request to the register endpoint
+        fetch('/api/user/' + user.id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    showSuccessMessageAndRedirect(3);
+                } else {
+                    showError('User editing failed ' + response.status + ' ' + response.statusText);
+                }
+            })
+            .catch(error => {
+                showError(error);
+                console.error('Error:', error);
+            });
+    }
+
+    function showSuccessMessageAndRedirect(second) {
+        showSuccess('Editing successful. redirecting to user page in ' + second + ' seconds');
+        setTimeout(function () {
+            showSuccessMessageAndRedirect(second - 1);
+        }, 1000);
+        if (second === 0) {
+            window.location.href = '/user';
+        }
+    }
+</script>
 </body>
 </html>

@@ -24,6 +24,7 @@
         <div class="alert alert-danger" role="alert" th:text="${errorMessage}">{error}</div>
     </div>
 
+    <script src="/js/app-script.js"></script>
     <script>
         function validateLogin() {
             let token = localStorage.getItem('accessToken');
@@ -31,33 +32,17 @@
                 return;
             }
 
-            // Make a POST request to the register endpoint
-            fetch('/api/auth/user', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-            })
-                .then(response => {
-                    // Handle the response
-                    if (response.ok) {
-                        // hide login and register buttons
-                        document.getElementById('btn-login').hidden = true;
-                        document.getElementById('btn-register').hidden = true;
+            getUser()
+                .then(data => {
+                    document.getElementById('btn-login').hidden = true;
+                    document.getElementById('btn-register').hidden = true;
 
-                        // show user and logout buttons
-                        document.getElementById('btn-user').hidden = false;
-                        document.getElementById('btn-logout').hidden = false;
+                    // show user and logout buttons
+                    document.getElementById('btn-user').hidden = false;
+                    document.getElementById('btn-logout').hidden = false;
 
-                        // set username
-                        response.json().then(data => {
-                            document.getElementById('btn-user').innerText = data.username;
-                        });
-                    } else {
-                        // Handle the error
-                        console.error('Registration failed');
-                    }
+                    // set username
+                    document.getElementById('btn-user').innerText = data.username;
                 })
                 .catch(error => {
                     // Handle any error that occurs during the request

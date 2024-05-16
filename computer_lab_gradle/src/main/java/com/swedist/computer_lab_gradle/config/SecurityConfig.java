@@ -43,6 +43,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         // api
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers("/api/user/**").authenticated()
+                        .requestMatchers("/api/user/password/**").authenticated()
 
                         // mvc
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
