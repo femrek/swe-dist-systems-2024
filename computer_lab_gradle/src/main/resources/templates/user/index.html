@@ -12,23 +12,38 @@
 <body>
 <div th:insert="component/header :: header"></div>
 <div class="container">
-    <div class="container">
-        <div th:insert="component/popup_message :: popup_message"></div>
-        <div class="row">
-            <div class="col">
-                <img src="https://via.placeholder.com/150" alt="Profile Picture">
-                <br>
-                <a class="btn btn-primary">Upload Profile Picture</a>
-                <br>
-                <a class="btn btn-primary" href="/user/edit">Edit User Details</a>
-                <a class="btn btn-primary" href="/user/changePassword">Change Password</a>
-            </div>
-            <div class="col">
-                <p id="user-prop-name">Full Name</p>
-                <p id="user-prop-username">Username</p>
-                <p id="user-prop-department">Department</p>
-                <p id="user-prop-roles">Roles</p>
-            </div>
+    <div th:insert="component/popup_message :: popup_message"></div>
+    <div class="row">
+        <div class="col">
+            <img src="https://via.placeholder.com/150" alt="Profile Picture">
+            <br>
+            <a class="btn btn-primary">Upload Profile Picture</a>
+            <br>
+            <a class="btn btn-primary" href="/user/edit">Edit User Details</a>
+            <a class="btn btn-primary" href="/user/changePassword">Change Password</a>
+        </div>
+        <div class="col">
+            <p id="user-prop-name">Full Name</p>
+            <p id="user-prop-username">Username</p>
+            <p id="user-prop-department">Department</p>
+            <p id="user-prop-roles">Roles</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h2>Reservations</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Computer</th>
+                    <th>Start</th>
+                    <th>Duration</th>
+                    <th>returned</th>
+                </tr>
+                </thead>
+                <tbody id="userReservationTable"></tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -47,7 +62,28 @@
             });
     }
 
+    function fetchReservations() {
+        getRequest('/api/users-reservation').then(data => {
+            let table = document.getElementById('userReservationTable');
+            table.innerHTML = '';
+            data.forEach(reservation => {
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${reservation.computer.brand} - ${reservation.computer.model}</td>
+                    <td>${reservation.dateFormatted}</td>
+                    <td>${reservation.duration} days</td>
+                    <td>${reservation.isReturned}</td>
+                `;
+                table.appendChild(row);
+            });
+        })
+            .catch(error => {
+                showError('Failed to fetch reservations: ' + error);
+            });
+    }
+
     fetchUserData();
+    fetchReservations();
 </script>
 
 </body>

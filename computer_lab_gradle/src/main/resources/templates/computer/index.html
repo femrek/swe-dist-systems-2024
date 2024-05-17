@@ -72,10 +72,12 @@
             <form onsubmit="updateComputer()">
                 <div class="modal-body">
                     <div class="mb-3">
+                        <label for="computerUpdateBrand">Brand</label>
                         <input type="text" class="form-control" name="brand" id="computerUpdateBrand"
-                               placeholder="Brand">
+                                                                        placeholder="Brand">
                     </div>
                     <div class="mb-3">
+                        <label for="computerUpdateModel">Model</label>
                         <input type="text" class="form-control" name="model" id="computerUpdateModel"
                                placeholder="Model">
                     </div>
@@ -103,9 +105,11 @@
             <form onsubmit="deleteComputer()">
                 <div class="modal-body">
                     <div class="mb-3">
+                        <label for="computerDeleteBrand">Brand</label>
                         <input type="text" class="form-control" id="computerDeleteBrand" placeholder="Brand" disabled>
                     </div>
                     <div class="mb-3">
+                        <label for="computerDeleteModel">Model</label>
                         <input type="text" class="form-control" id="computerDeleteModel" placeholder="Model" disabled>
                     </div>
                 </div>
@@ -129,44 +133,48 @@
                 <h1 class="modal-title fs-5">Reserve a computer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="reservationForm" th:action="@{/reservation}" method="post">
+            <form onsubmit="reserve()">
                 <div class="modal-body">
                     <!-- dummy computer input. shows computer name -->
                     <div class="mb-3">
+                        <label for="computerReserveInputDummy">Computer</label>
                         <input type="text" class="form-control" id="computerReserveInputDummy" placeholder="Name"
                                disabled>
                     </div>
 
                     <!-- computer input. keeps computer id -->
+                    <!--suppress HtmlFormInputWithoutLabel -->
                     <input id="computerReserveInput" hidden="hidden" name="computerId">
 
+                    <!-- student dummy input for students -->
+                    <div id="studentReserveInputGroupForStudent" class="input-group mb-3" hidden="hidden">
+                        <label class="input-group-text" for="studentReserveInputDummy">Student</label>
+                        <input type="text" class="form-control" id="studentReserveInputDummy" placeholder="Name"
+                               disabled>
+                    </div>
                     <!-- student dropdown menu input -->
-                    <div class="input-group mb-3">
+                    <div id="studentReserveInputGroupForAdmin" class="input-group mb-3" hidden="hidden">
                         <label class="input-group-text" for="studentReserveInput">Student</label>
-                        <select class="form-select" id="studentReserveInput" name="studentId">
-                            <option th:each="student:${students}"
-                                    th:text="|${student.getName()} - ${student.getDepartment()}|"
-                                    th:value="${student.getId()}"></option>
-                        </select>
+                        <select class="form-select" id="studentReserveInput"></select>
                     </div>
 
                     <!-- date input -->
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="date">Date</span>
                         <input type="date" class="form-control" aria-label="date" aria-describedby="date"
-                               name="reservationDate">
+                               id="reservationDateInput">
                     </div>
 
                     <!-- duration in days input -->
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="day">Day</span>
                         <input type="text" class="form-control" placeholder="Day" aria-label="day"
-                               aria-describedby="day" name="duration">
+                               aria-describedby="day" id="reservationDurationInput">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="reservationCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>
@@ -204,6 +212,23 @@
             });
     }
 
+    function fetchStudents() {
+        getRequest('/api/student')
+            .then(data => {
+                let studentReserveInput = document.getElementById('studentReserveInput');
+                studentReserveInput.innerHTML = '';
+                data.forEach(student => {
+                    let option = document.createElement('option');
+                    option.value = student.id;
+                    option.text = student.fullName + ' - ' + student.department;
+                    studentReserveInput.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
     fetchComputers()
 </script>
 
@@ -225,6 +250,21 @@
     function onReserveClick(id, brand, model) {
         document.getElementById("computerReserveInputDummy").value = brand + " - " + model;
         document.getElementById("computerReserveInput").value = id;
+        let user = localStorage.getItem('user');
+        if (user !== null && user !== '') {
+            user = JSON.parse(user);
+            if (user.roles.includes('ADMIN')) {
+                document.getElementById('studentReserveInputGroupForAdmin').hidden = false;
+                document.getElementById('studentReserveInputGroupForStudent').hidden = true;
+                fetchStudents();
+            } else if (user.roles.includes('STUDENT')) {
+                document.getElementById('studentReserveInputGroupForAdmin').hidden = true;
+                document.getElementById('studentReserveInputGroupForStudent').hidden = false;
+                document.getElementById('studentReserveInputDummy').value = user.fullName + ' - ' + user.department;
+            } else {
+                showError('Logged in user is not a student or an admin');
+            }
+        }
     }
 </script>
 
@@ -241,7 +281,7 @@
         };
 
         postRequest('/api/computer', data)
-            .then(response => {
+            .then(_ => {
                 fetchComputers();
                 document.getElementById('addComputerCancel').click();
                 showSuccess('Computer added successfully');
@@ -265,7 +305,7 @@
         };
 
         putRequest('/api/computer/' + selectedComputerId, data)
-            .then(response => {
+            .then(_ => {
                 fetchComputers();
                 document.getElementById('updateComputerCancel').click();
                 showSuccess('Computer updated successfully');
@@ -281,7 +321,7 @@
         event.preventDefault(); // Prevent the default form submission
 
         deleteRequest('/api/computer/' + selectedComputerId)
-            .then(response => {
+            .then(_ => {
                 fetchComputers();
                 document.getElementById('deleteComputerCancel').click();
                 showSuccess('Computer deleted successfully');
@@ -289,6 +329,55 @@
             .catch(error => {
                 document.getElementById('deleteComputerCancel').click();
                 showError('Error deleting computer: ' + error.message);
+                console.error('Error:', error);
+            });
+    }
+
+    function reserve() {
+        event.preventDefault(); // Prevent the default form submission
+
+        let user = localStorage.getItem('user');
+        let isAdmin = false;
+        if (user !== null && user !== '') {
+            user = JSON.parse(user);
+            if (user.roles.includes('ADMIN')) {
+                isAdmin = true;
+            }
+        } else {
+            showError('No user logged in');
+            return;
+        }
+
+        let computerId = document.getElementById("computerReserveInput").value;
+        let studentId = isAdmin ? document.getElementById("studentReserveInput").value : null;
+        let reservationDate = document.getElementById("reservationDateInput").value;
+        let duration = document.getElementById("reservationDurationInput").value;
+
+        let dataForAdmin = {
+            computerId: computerId,
+            studentId: studentId,
+            reservationDate: reservationDate,
+            duration: duration
+        };
+        let dataForStudent = {
+            computerId: computerId,
+            reservationDate: reservationDate,
+            duration: duration
+        };
+        let data = isAdmin ? dataForAdmin : dataForStudent;
+
+        let urlForAdmin = '/api/reservation';
+        let urlForStudent = '/api/users-reservation';
+        let url = isAdmin ? urlForAdmin : urlForStudent;
+
+        postRequest(url, data)
+            .then(_ => {
+                document.getElementById('reservationCancel').click();
+                showSuccess('Computer reserved successfully');
+            })
+            .catch(error => {
+                document.getElementById('reservationCancel').click();
+                showError('Error reserving computer: ' + error.message);
                 console.error('Error:', error);
             });
     }

@@ -53,6 +53,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/student/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/student/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/reservation/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/users-reservation/**").hasAnyAuthority("STUDENT", "ADMIN")
 
                         // mvc
                         .requestMatchers("/").permitAll()
@@ -60,6 +62,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/computer/**").permitAll()
                         .requestMatchers("/student/**").permitAll()
+                        .requestMatchers("/reservation/**").permitAll()
 
                         // static
                         .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**").permitAll()

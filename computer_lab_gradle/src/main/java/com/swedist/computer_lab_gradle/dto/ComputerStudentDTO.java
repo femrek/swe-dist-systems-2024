@@ -28,7 +28,7 @@ public class ComputerStudentDTO {
         isReturned = computerStudent.getIsReturned();
     }
 
-    public String getDateFormatted(){
+    public String getDateFormatted() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(reservationDate);
     }
@@ -41,8 +41,7 @@ public class ComputerStudentDTO {
                 .append(", ")
                 .append(getDateFormatted())
                 .append(", ")
-                .append(duration)
-                .append(" Days")
+                .append(duration).append(" days")
                 .toString();
     }
 }

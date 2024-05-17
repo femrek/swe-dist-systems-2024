@@ -41,6 +41,11 @@ public class AppUser implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, targetEntity = ComputerStudent.class, mappedBy = "student", cascade = CascadeType.ALL)
     private Set<ComputerStudent> reservations;
 
+    public void delete(ComputerStudent reservation) {
+        if (reservations != null) {
+            reservations.remove(reservation);
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,9 +1,7 @@
 package com.swedist.computer_lab_gradle.controller.student;
 
 import com.swedist.computer_lab_gradle.dto.UserDTO;
-import com.swedist.computer_lab_gradle.dto.request.UserCreateRequest;
 import com.swedist.computer_lab_gradle.dto.request.UserUpdateRequest;
-import com.swedist.computer_lab_gradle.service.AuthService;
 import com.swedist.computer_lab_gradle.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentRest {
     private final UserService userService;
-    private final AuthService authService;
 
     @GetMapping("")
     public ResponseEntity<List<UserDTO>> getStudents() {
