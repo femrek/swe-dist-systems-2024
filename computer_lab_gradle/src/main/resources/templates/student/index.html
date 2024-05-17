@@ -175,7 +175,7 @@
                     `;
                     studentTable.appendChild(row);
                 });
-                hideAdminOnlyElements();
+                setElementsVisibility()
             })
             .catch(error => {
                 showError('Error when loading students' + error.message);

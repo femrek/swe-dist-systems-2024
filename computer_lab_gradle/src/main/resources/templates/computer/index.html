@@ -184,7 +184,7 @@
 
 <script src="/js/app-script.js"></script>
 <script>
-    hideAdminOnlyElements();
+    setElementsVisibility()
 
     function fetchComputers() {
         getRequest('/api/computer')
@@ -205,7 +205,7 @@
                     `;
                     computerTable.appendChild(row);
                 });
-                hideAdminOnlyElements();
+                setElementsVisibility()
             })
             .catch(error => {
                 console.error('Error:', error);

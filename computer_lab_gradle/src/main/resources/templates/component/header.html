@@ -3,7 +3,8 @@
     <div class="bg-primary mb-2 p-3 rounded-bottom-2 container-fluid">
         <div class="d-flex flex-wrap align-content-center container">
             <a class="flex-column btn fs-2 text-white" href="/">CLM</a>
-            <a class="flex-column align-content-center btn btn-primary fs-5" href="/computer">Computers</a>
+            <a class="flex-column align-content-center btn btn-primary fs-5 auth-only-element"
+               href="/computer">Computers</a>
             <a class="flex-column align-content-center btn btn-primary fs-5 admin-only-element"
                href="/student">Students</a>
             <a class="flex-column align-content-center btn btn-primary fs-5 admin-only-element"
@@ -56,7 +57,7 @@
         function logout() {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('user');
-            hideAdminOnlyElements();
+            setElementsVisibility();
             window.location.href = '/';
         }
 

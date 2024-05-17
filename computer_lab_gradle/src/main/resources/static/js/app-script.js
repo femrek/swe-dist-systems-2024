@@ -94,12 +94,12 @@ async function getUser() {
     let user = await getRequest('/api/auth/user');
 
     localStorage.setItem('user', JSON.stringify(user));
-    hideAdminOnlyElements();
+    setElementsVisibility()
 
     return user;
 }
 
-function hideAdminOnlyElements() {
+function setAdminOnlyElementsVisibility() {
     let user = localStorage.getItem('user');
     if (user !== null && user !== undefined && user !== '') {
         let roles = JSON.parse(user).roles;
@@ -121,4 +121,26 @@ function hideAdminOnlyElements() {
     }
 }
 
-hideAdminOnlyElements();
+function setAuthOnlyElementsVisibility() {
+    let user = localStorage.getItem('user');
+    if (user === null || user === undefined || user === '') {
+        // hide if it is not authenticated
+        let buttons = document.getElementsByClassName('auth-only-element');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = 'none';
+        }
+    } else {
+        // show if it is authenticated
+        let buttons = document.getElementsByClassName('auth-only-element');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.display = 'inline-block';
+        }
+    }
+}
+
+function setElementsVisibility() {
+    setAdminOnlyElementsVisibility();
+    setAuthOnlyElementsVisibility();
+}
+
+setElementsVisibility();
