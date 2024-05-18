@@ -144,7 +144,7 @@
 <script src="/js/app-script.js"></script>
 
 <script>
-    function getStudents() {
+    function fetchStudents() {
         getRequest('/api/student')
             .then(data => {
                 let studentTable = document.getElementById("studentTable");
@@ -197,7 +197,7 @@
             });
     }
 
-    getStudents();
+    fetchStudents();
 </script>
 
 <script>
@@ -238,7 +238,7 @@
             .then(_ => {
                 document.getElementById("updateStudentCancel").click();
                 showSuccess('Student updated successfully');
-                getStudents();
+                fetchStudents();
             })
             .catch(error => {
                 showError('Error when updating student' + error.message);
@@ -253,7 +253,7 @@
             .then(_ => {
                 document.getElementById("deleteStudentCancel").click();
                 showSuccess('Student deleted successfully');
-                getStudents();
+                fetchStudents();
             })
             .catch(error => {
                 showError('Error when deleting student' + error.message);
