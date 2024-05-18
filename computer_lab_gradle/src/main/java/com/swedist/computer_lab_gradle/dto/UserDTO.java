@@ -1,6 +1,7 @@
 package com.swedist.computer_lab_gradle.dto;
 
 import com.swedist.computer_lab_gradle.entity.AppUser;
+import com.swedist.computer_lab_gradle.util.AppUtil;
 import lombok.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class UserDTO {
     private String fullName;
     private List<String> roles;
     private String department;
+    private String picturePath;
 
     public UserDTO(AppUser appUser) {
         this.id = appUser.getId();
@@ -23,6 +25,7 @@ public class UserDTO {
         this.fullName = appUser.getFullName();
         this.department = appUser.getDepartment();
         this.roles = appUser.getRoles().stream().map(Enum::name).toList();
+        this.picturePath = AppUtil.getUserPicturePath(appUser.getImageName());
     }
 
     public String toVisualString() {

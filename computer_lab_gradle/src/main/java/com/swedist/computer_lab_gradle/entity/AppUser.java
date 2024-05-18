@@ -34,6 +34,9 @@ public class AppUser implements UserDetails {
     @Column(name = "department")
     private String department;
 
+    @Column(name = "image_name")
+    private String imageName;
+
     @Column(name = "role")
     @Enumerated(EnumType.ORDINAL)
     private Set<AppRole> roles;

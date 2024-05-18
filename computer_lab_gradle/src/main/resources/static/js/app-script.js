@@ -1,15 +1,19 @@
-async function getRequest(path) {
+async function getRequest(path, json = true) {
     let token = localStorage.getItem('accessToken');
     if (token === null) {
         return;
     }
 
+    let headers = json ? {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    } : {
+        'Authorization': 'Bearer ' + token
+    }
+
     let response = await fetch(path, {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        }
+        headers: headers
     });
 
     if (response.ok) {
@@ -19,19 +23,23 @@ async function getRequest(path) {
     }
 }
 
-async function postRequest(path, data) {
+async function postRequest(path, data, json = true) {
     let token = localStorage.getItem('accessToken');
     if (token === null) {
         return;
     }
 
+    let headers = json ? {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    } : {
+        'Authorization': 'Bearer ' + token
+    };
+
     let response = await fetch(path, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify(data)
+        headers: headers,
+        body: json ? JSON.stringify(data) : data
     });
 
     if (response.ok) {

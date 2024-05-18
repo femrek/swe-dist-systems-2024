@@ -66,6 +66,7 @@ public class SecurityConfig {
 
                         // static
                         .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/picture/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
