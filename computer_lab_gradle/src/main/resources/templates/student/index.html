@@ -17,6 +17,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th>Picture</th>
             <th>Name</th>
             <th>Department</th>
             <th>Actions</th>
@@ -152,6 +153,7 @@
                 data.forEach(student => {
                     let row = document.createElement("tr");
                     row.innerHTML = `
+                        <td><img src="${student.picturePath}" class="rounded" alt="Profile Picture" style="height: 100px; width: 100px"></td>
                         <td>${student.fullName}</td>
                         <td>${student.department}</td>
                         <td>
