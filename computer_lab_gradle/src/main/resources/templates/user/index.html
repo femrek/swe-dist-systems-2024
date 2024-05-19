@@ -14,26 +14,49 @@
 <div class="container">
     <div th:insert="component/popup_message :: popup_message"></div>
     <div class="row m-3">
-        <div class="col-md"></div>
-        <div class="col-md-7">
+        <div class="col-lg"></div>
+        <div class="col-lg-7">
             <div class="d-flex justify-content-center">
                 <img class="rounded" id="user-image" alt="Profile Picture" style="height: 200px; width: 200px">
             </div>
             <br>
             <input hidden="hidden" type="file" id="studentPictureInput" onchange="saveImage()">
-            <div class="row"><a class="btn btn-primary" onclick="document.getElementById('studentPictureInput').click()">
+            <div class="row"><a class="btn btn-primary"
+                                onclick="document.getElementById('studentPictureInput').click()">
                 Upload New Profile Picture</a></div>
             <div class="row"><a class="btn btn-primary my-2" href="/user/edit">Edit User Details</a></div>
             <div class="row"><a class="btn btn-primary" href="/user/changePassword">Change Password</a></div>
+            <hr>
             <div class="row">
-                <div class="row fs-5" id="user-prop-username">Username</div>
-                <div class="row fs-5" id="user-prop-name">Full Name</div>
-                <div class="row fs-5" id="user-prop-department">Department</div>
-                <div class="row fs-5" id="user-prop-roles">Roles</div>
+                <div class="d-flex">
+                    <div class="flex-column fs-5 fw-bold me-auto">Username</div>
+                    <div class="flex-column fs-5" id="user-prop-username"></div>
+                </div>
             </div>
 
+            <div class="row">
+                <div class="d-flex">
+                    <div class="flex-column fs-5 fw-bold me-auto">Full Name</div>
+                    <div class="flex-column fs-5" id="user-prop-name"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="d-flex">
+                    <div class="flex-column fs-5 fw-bold me-auto">Department</div>
+                    <div class="flex-column fs-5" id="user-prop-department"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="d-flex">
+                    <div class="flex-column fs-5 fw-bold me-auto">Roles</div>
+                    <div class="flex-column fs-5" id="user-prop-roles"></div>
+                </div>
+            </div>
+            <hr>
         </div>
-        <div class="col-md"></div>
+        <div class="col-lg"></div>
         <div class="row">
             <div class="fs-3">Reservations</div>
             <div>
@@ -56,10 +79,10 @@
 <script>
     function fetchUserData() {
         getUser().then(data => {
-            document.getElementById('user-prop-name').innerText = 'Full Name: ' + data.fullName;
-            document.getElementById('user-prop-username').innerText = 'Username: ' + data.username;
-            document.getElementById('user-prop-department').innerText = 'Department: ' + data.department;
-            document.getElementById('user-prop-roles').innerText = 'Roles: ' + data.roles;
+            document.getElementById('user-prop-name').innerText = data.fullName;
+            document.getElementById('user-prop-username').innerText = data.username;
+            document.getElementById('user-prop-department').innerText = data.department;
+            document.getElementById('user-prop-roles').innerText = data.roles;
             document.getElementById('user-image').src = data.picturePath;
         })
             .catch(error => {
