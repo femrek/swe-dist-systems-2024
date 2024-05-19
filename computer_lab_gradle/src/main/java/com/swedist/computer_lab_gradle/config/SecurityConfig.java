@@ -43,16 +43,12 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         // api
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers("/api/user-administrating/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/user/**").authenticated()
-                        .requestMatchers("/api/user/password/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/computer/**").hasAnyAuthority("ADMIN", "STUDENT")
                         .requestMatchers(HttpMethod.POST, "/api/computer/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/computer/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/computer/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/student/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/student/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/student/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/reservation/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/users-reservation/**").hasAnyAuthority("STUDENT", "ADMIN")
 

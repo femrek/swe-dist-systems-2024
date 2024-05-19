@@ -182,7 +182,7 @@
 
 <script>
     function fetchStudents() {
-        getRequest('/api/student')
+        getRequest('/api/user-administrating')
             .then(data => {
                 let studentTable = document.getElementById("studentTable");
                 studentTable.innerHTML = "";
@@ -285,7 +285,7 @@
             department: department
         }
 
-        putRequest('/api/student/' + selectedStudentId, data)
+        putRequest('/api/user-administrating/' + selectedStudentId, data)
             .then(_ => {
                 document.getElementById("updateStudentCancel").click();
                 showSuccess('Student updated successfully');
@@ -300,7 +300,7 @@
     function deleteStudent() {
         event.preventDefault(); // prevent default form submission
 
-        deleteRequest('/api/student/' + selectedStudentId)
+        deleteRequest('/api/user-administrating/' + selectedStudentId)
             .then(_ => {
                 document.getElementById("deleteStudentCancel").click();
                 showSuccess('Student deleted successfully');
@@ -365,7 +365,7 @@
     function makeAdmin() {
         event.preventDefault(); // Prevent the default form submission
 
-        postRequest('/api/user/'+ selectedStudentId +'/adminTrue')
+        postRequest('/api/user-administrating/'+ selectedStudentId +'/adminTrue')
             .then(_ => {
                 document.getElementById("makeAdminCancel").click();
                 showSuccess('Student made admin successfully');

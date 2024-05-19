@@ -41,6 +41,16 @@ public class UserService {
         return new UserDTO(userRepository.save(user));
     }
 
+    public UserDTO updateUser(UserUpdateRequest userUpdateRequest, String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Authorization header is missing");
+        }
+        String token = authHeader.substring(7);
+        String username = jwtService.extractUsername(token);
+        AppUser user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        return updateUser(userUpdateRequest, user.getId());
+    }
+
     public void updatePassword(PasswordUpdateRequest passwordUpdateRequest, Long userId) {
         AppUser user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found")); //todo handle exception
         if (!passwordEncoder.matches(passwordUpdateRequest.getCurrentPassword(), user.getPassword())) {
@@ -48,6 +58,16 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(passwordUpdateRequest.getNewPassword()));
         userRepository.save(user);
+    }
+
+    public void updatePassword(PasswordUpdateRequest passwordUpdateRequest, String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new RuntimeException("Authorization header is missing");
+        }
+        String token = authHeader.substring(7);
+        String username = jwtService.extractUsername(token);
+        AppUser user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        updatePassword(passwordUpdateRequest, user.getId());
     }
 
     public void deleteUser(Long userId) {

@@ -15,17 +15,17 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserRest {
     private final UserService userService;
 
-    @PostMapping("/{id}")
+    @PostMapping({"", "/"})
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateRequest userUpdateRequest,
-                                              @PathVariable Long id) {
-        UserDTO savedUser = userService.updateUser(userUpdateRequest, id);
+                                              @RequestHeader("Authorization") String authHeader) {
+        UserDTO savedUser = userService.updateUser(userUpdateRequest, authHeader);
         return ResponseEntity.ok(savedUser);
     }
 
-    @PostMapping("/password/{userId}")
+    @PostMapping("/password")
     public ResponseEntity<String> updatePassword(@RequestBody PasswordUpdateRequest passwordUpdateRequest,
-                                               @PathVariable Long userId) {
-        userService.updatePassword(passwordUpdateRequest, userId);
+                                                 @RequestHeader("Authorization") String authHeader) {
+        userService.updatePassword(passwordUpdateRequest, authHeader);
         return ResponseEntity.ok("{}");
     }
 
@@ -33,10 +33,5 @@ public class UserRest {
     public ResponseEntity<UserDTO> uploadImage(@RequestParam("picture") MultipartFile multipartFile,
                                                @RequestHeader("Authorization") String authHeader) {
         return ResponseEntity.ok(userService.setUserImage(multipartFile, authHeader));
-    }
-
-    @PostMapping("/{userId}/adminTrue")
-    public ResponseEntity<UserDTO> setAdminTrue(@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok(userService.setAdminTrue(userId));
     }
 }

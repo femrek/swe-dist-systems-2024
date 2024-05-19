@@ -64,23 +64,6 @@
     function submitEdit() {
         event.preventDefault(); // Prevent the default form submission
 
-        let token = localStorage.getItem('accessToken');
-        if (token === null) {
-            showError('You are not logged in');
-            return;
-        }
-
-        let rawUser = localStorage.getItem('user');
-        if (rawUser === null) {
-            showError('User not found');
-            return;
-        }
-        let user = JSON.parse(rawUser);
-        if (user.id === null) {
-            showError('User id not found');
-            return;
-        }
-
         // Get the values of input fields
         let fullName = document.getElementById("fullName").value;
         let department = document.getElementById("department").value;
@@ -91,10 +74,8 @@
             department: department
         };
 
-        data.password = data.password === '' ? null : data.password;
-
         // Make a POST request to the register endpoint
-        postRequest('/api/user/' + user.id, data)
+        postRequest('/api/user', data)
             .then(_ => {
                 showSuccessMessageAndRedirect(3);
             })

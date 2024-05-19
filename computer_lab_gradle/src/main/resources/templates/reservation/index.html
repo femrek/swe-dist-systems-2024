@@ -251,7 +251,7 @@
     }
 
     function fetchStudents() {
-        getRequest('/api/student').then(data => {
+        getRequest('/api/user-administrating').then(data => {
             let studentReserveInput = document.getElementById("studentReserveInput");
             let studentReReserveInput = document.getElementById("studentReReserveInput");
             studentReserveInput.innerHTML = "";
