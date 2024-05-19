@@ -23,7 +23,7 @@ async function getRequest(path, json = true) {
     }
 }
 
-async function postRequest(path, data, json = true) {
+async function postRequest(path, data = null, json = true) {
     let token = localStorage.getItem('accessToken');
     if (token === null) {
         return;
@@ -39,7 +39,7 @@ async function postRequest(path, data, json = true) {
     let response = await fetch(path, {
         method: 'POST',
         headers: headers,
-        body: json ? JSON.stringify(data) : data
+        body: data == null ? null : json ? JSON.stringify(data) : data
     });
 
     if (response.ok) {

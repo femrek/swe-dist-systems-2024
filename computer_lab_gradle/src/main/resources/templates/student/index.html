@@ -143,6 +143,38 @@
 </div>
 <!-- Reservation Student Modal -->
 
+<!-- Make Admin Modal -->
+<div class="modal fade" id="makeAdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Make User Admin</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="makeAdmin()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="deleteStudentName">Name</label>
+                        <input type="text" class="form-control" id="makeAdminName" placeholder="Name" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteStudentDepartment">Department</label>
+                        <input type="text" class="form-control" id="makeAdminDepartment" placeholder="Department"
+                               disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Make Admin</button>
+                    <button id="makeAdminCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Make Admin Modal -->
+
 <script src="/js/app-script.js"></script>
 
 <script>
@@ -152,6 +184,7 @@
                 let studentTable = document.getElementById("studentTable");
                 studentTable.innerHTML = "";
                 data.forEach(student => {
+                    let isAdmin = student.roles.includes('ADMIN');
                     let row = document.createElement("tr");
                     row.innerHTML = `
                         <td><img src="${student.picturePath}" class="rounded" alt="Profile Picture" style="height: 100px; width: 100px"></td>
@@ -170,6 +203,11 @@
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reservationComputer"
                                     onclick="onReserveClick(${student.id}, '${student.fullName}', '${student.department}')">
                                 Reserve
+                            </button>
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#makeAdminModal"
+                                    onclick="onMakeAdminClick(${student.id}, '${student.fullName}', '${student.department}')"
+                                     ${isAdmin ? 'hidden="hidden"' : ''}>
+                                Make Admin
                             </button>
                         </td>
                     `;
@@ -223,6 +261,12 @@
         fetchComputers();
         document.getElementById("studentReserveInputDummy").value = department + " - " + name;
         document.getElementById("studentReserveInput").value = id;
+    }
+
+    function onMakeAdminClick(id, name, department) {
+        selectedStudentId = id;
+        document.getElementById("makeAdminName").value = name;
+        document.getElementById("makeAdminDepartment").value = department;
     }
 </script>
 
@@ -311,6 +355,21 @@
             .catch(error => {
                 document.getElementById('reservationCancel').click();
                 showError('Error reserving computer: ' + error.message);
+                console.error('Error:', error);
+            });
+    }
+
+    function makeAdmin() {
+        event.preventDefault(); // Prevent the default form submission
+
+        postRequest('/api/user/'+ selectedStudentId +'/adminTrue')
+            .then(_ => {
+                document.getElementById("makeAdminCancel").click();
+                showSuccess('Student made admin successfully');
+                fetchStudents();
+            })
+            .catch(error => {
+                showError('Error when making student admin' + error.message);
                 console.error('Error:', error);
             });
     }

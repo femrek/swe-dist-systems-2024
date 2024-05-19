@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -47,6 +48,19 @@ public class AppUser implements UserDetails {
     public void delete(ComputerStudent reservation) {
         if (reservations != null) {
             reservations.remove(reservation);
+        }
+    }
+
+    public void add(AppRole role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+    }
+
+    public void delete(AppRole role) {
+        if (roles != null) {
+            roles.remove(role);
         }
     }
 

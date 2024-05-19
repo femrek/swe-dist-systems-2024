@@ -34,4 +34,9 @@ public class UserRest {
                                                @RequestHeader("Authorization") String authHeader) {
         return ResponseEntity.ok(userService.setUserImage(multipartFile, authHeader));
     }
+
+    @PostMapping("/{userId}/adminTrue")
+    public ResponseEntity<UserDTO> setAdminTrue(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(userService.setAdminTrue(userId));
+    }
 }
