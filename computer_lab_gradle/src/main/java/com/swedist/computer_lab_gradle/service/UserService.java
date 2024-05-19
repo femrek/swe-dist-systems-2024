@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
@@ -70,10 +69,12 @@ public class UserService {
             if (user.getImageName() != null) {
                 Files.delete(Path.of("src/main/resources/profilePicture/" + user.getImageName()));
             }
-        } catch (IOException ignored){
+        } catch (IOException ignored) {
         }
 
         try {
+            Path path = Path.of("src/main/resources/profilePicture");
+            if (!Files.exists(path)) Files.createDirectory(path);
             Files.write(Path.of("src/main/resources/profilePicture/" + filename),
                     picture.getBytes());
         } catch (IOException e) {
