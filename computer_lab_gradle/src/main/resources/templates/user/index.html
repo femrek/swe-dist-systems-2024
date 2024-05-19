@@ -28,20 +28,17 @@
                 <div class="row"><a class="btn btn-primary my-2" href="/user/edit">Edit User Details</a></div>
                 <div class="row"><a class="btn btn-primary" href="/user/changePassword">Change Password</a></div>
             </form>
+            <div class="row">
+                <div class="row fs-5" id="user-prop-username">Username</div>
+                <div class="row fs-5" id="user-prop-name">Full Name</div>
+                <div class="row fs-5" id="user-prop-department">Department</div>
+                <div class="row fs-5" id="user-prop-roles">Roles</div>
+            </div>
+
         </div>
         <div class="col-md"></div>
-    </div>
-    <div class="col-md"></div>
-    <div class="col-md-7">
-        <div class="row m-3">
-            <div class="row fs-5" id="user-prop-username">Username</div>
-            <div class="row fs-5" id="user-prop-name">Full Name</div>
-            <div class="row fs-5" id="user-prop-department">Department</div>
-            <div class="row fs-5" id="user-prop-roles">Roles</div>
-        </div>
-        <div class="row m-3">
-            <div class="col">
-                <h2>Reservations</h2>
+        <div class="row">
+                <div class="fs-3">Reservations</div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -53,12 +50,9 @@
                     </thead>
                     <tbody id="userReservationTable"></tbody>
                 </table>
-            </div>
         </div>
     </div>
-    <div class="col-md"></div>
-</div>
-
+    </div>
 <script src="/js/app-script.js"></script>
 <script>
     function fetchUserData() {
