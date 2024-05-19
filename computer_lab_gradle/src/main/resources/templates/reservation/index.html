@@ -221,7 +221,8 @@
                                 onclick="onReReserveClick(${reservation.id}, ${reservation.computer.id}, ${reservation.student.id}, '${reservation.reservationDate}', ${reservation.duration})">Re-Reserve
                         </button>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#returnReservation"
-                                onclick="onReturnReserveClick(${reservation.id})">Return
+                                onclick="onReturnReserveClick(${reservation.id})"
+                                ${reservation.isReturned ? 'disabled' : ''}>Return
                         </button>
                     </td>
                 `;
