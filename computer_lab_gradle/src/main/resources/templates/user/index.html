@@ -125,6 +125,7 @@
 
         postRequest('/api/user/picture', data, false).then(_ => {
             showSuccess("Image added successfully");
+            fetchUserData();
         }).catch(error => {
             showError('Error when adding image: ' + error.message);
         });
