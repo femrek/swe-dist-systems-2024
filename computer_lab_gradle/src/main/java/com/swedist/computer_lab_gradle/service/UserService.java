@@ -107,7 +107,7 @@ public class UserService {
 
     public byte[] getPicture(String pictureName) {
         try {
-            Path defaultImagePath = Path.of("src/main/resources/static/images/profilepp.png");
+            Path defaultImagePath = Path.of("src/main/resources/static/images/defaultProfilePicture.png");
             if (pictureName == null || pictureName.isBlank()) {
                 return Files.readAllBytes(defaultImagePath);
             }
