@@ -13,47 +13,48 @@
 <div th:insert="component/header :: header"></div>
 <div class="container">
     <div th:insert="component/popup_message :: popup_message"></div>
-    <div class="row">
-        <div class="col">
+    <div class="row m-3">
+        <div class="col-md"></div>
+        <div class="col-md-7">
             <img class="rounded" id="user-image" alt="Profile Picture" style="height: 200px; width: 200px">
             <br>
             <form onsubmit="saveImage()">
                 <label for="studentPictureInput">Select image:</label>
                 <div class="row">
-                    <input class="form-control col" type="file" id="studentPictureInput" name="studentPictureInput" accept="image/*">
+                    <input class="form-control col" type="file" id="studentPictureInput" name="studentPictureInput"
+                           accept="image/*">
                     <input class="btn btn-warning col-3" type="submit">
                 </div>
+                <div class="row"><a class="btn btn-primary my-2" href="/user/edit">Edit User Details</a></div>
+                <div class="row"><a class="btn btn-primary" href="/user/changePassword">Change Password</a></div>
             </form>
-            <br>
-            <a class="btn btn-primary" href="/user/edit">Edit User Details</a>
-            <a class="btn btn-primary" href="/user/changePassword">Change Password</a>
+            <div class="row">
+                <div class="row fs-5" id="user-prop-username">Username</div>
+                <div class="row fs-5" id="user-prop-name">Full Name</div>
+                <div class="row fs-5" id="user-prop-department">Department</div>
+                <div class="row fs-5" id="user-prop-roles">Roles</div>
+            </div>
+
         </div>
-        <div class="col">
-            <p id="user-prop-name">Full Name</p>
-            <p id="user-prop-username">Username</p>
-            <p id="user-prop-department">Department</p>
-            <p id="user-prop-roles">Roles</p>
+        <div class="col-md"></div>
+        <div class="row">
+                <div class="fs-3">Reservations</div>
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Computer</th>
+                            <th>Start</th>
+                            <th>Duration</th>
+                            <th>returned</th>
+                        </tr>
+                        </thead>
+                        <tbody id="userReservationTable"></tbody>
+                    </table>
+                </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col">
-            <h2>Reservations</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Computer</th>
-                    <th>Start</th>
-                    <th>Duration</th>
-                    <th>returned</th>
-                </tr>
-                </thead>
-                <tbody id="userReservationTable"></tbody>
-            </table>
-        </div>
     </div>
-</div>
-
 <script src="/js/app-script.js"></script>
 <script>
     function fetchUserData() {
