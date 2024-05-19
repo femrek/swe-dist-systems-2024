@@ -78,15 +78,16 @@
             },
             body: JSON.stringify(data)
         })
-            .then(response => {
+            .then(async response => {
                 if (response.ok) {
                     showSuccessMessageAndRedirect(5);
                 } else {
-                    showError('Registration failed ' + response.status + ' ' + response.statusText);
+                    let resBody = await response.text();
+                    showError('Registration failed ' + response.status + ' ' + resBody);
                 }
             })
             .catch(error => {
-                showError(error);
+                showError('Error: ' + error);
                 console.error('Error:', error);
             });
     }

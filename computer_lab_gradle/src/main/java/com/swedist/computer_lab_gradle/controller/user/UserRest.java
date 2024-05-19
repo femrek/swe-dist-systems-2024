@@ -23,10 +23,10 @@ public class UserRest {
     }
 
     @PostMapping("/password/{userId}")
-    public ResponseEntity<Void> updatePassword(@RequestBody PasswordUpdateRequest passwordUpdateRequest,
+    public ResponseEntity<String> updatePassword(@RequestBody PasswordUpdateRequest passwordUpdateRequest,
                                                @PathVariable Long userId) {
         userService.updatePassword(passwordUpdateRequest, userId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("{}");
     }
 
     @PostMapping("/picture")

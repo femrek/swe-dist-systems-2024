@@ -69,7 +69,8 @@
                     localStorage.setItem("accessToken", res_json.token);
                     window.location.href = '/';
                 } else {
-                    showError('Error: ' + response.status + ' ' + response.statusText);
+                    let resBody = await response.text();
+                    showError('Error: ' + response.status + ' ' + resBody);
                 }
             })
             .catch(error => {

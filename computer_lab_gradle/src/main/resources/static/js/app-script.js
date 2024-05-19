@@ -19,7 +19,8 @@ async function getRequest(path, json = true) {
     if (response.ok) {
         return await response.json();
     } else {
-        throw new Error(await response.json());
+        let resBody = await response.text();
+        throw new Error(resBody);
     }
 }
 
@@ -45,7 +46,8 @@ async function postRequest(path, data = null, json = true) {
     if (response.ok) {
         return await response.json();
     } else {
-        throw new Error(await response.json());
+        let resBody = await response.text();
+        throw new Error(resBody);
     }
 }
 
@@ -67,7 +69,8 @@ async function putRequest(path, data) {
     if (response.ok) {
         return await response.json();
     } else {
-        throw new Error(await response.json());
+        let resBody = await response.text();
+        throw new Error(resBody);
     }
 }
 
@@ -88,7 +91,8 @@ async function deleteRequest(path) {
     if (response.ok) {
         return await response.json();
     } else {
-        throw new Error(await response.json());
+        let resBody = await response.text();
+        throw new Error(resBody);
     }
 
 }

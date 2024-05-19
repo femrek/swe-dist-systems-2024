@@ -36,22 +36,20 @@
                 return;
             }
 
-            getUser()
-                .then(data => {
-                    document.getElementById('btn-login').hidden = true;
-                    document.getElementById('btn-register').hidden = true;
+            getUser().then(data => {
+                document.getElementById('btn-login').hidden = true;
+                document.getElementById('btn-register').hidden = true;
 
-                    // show user and logout buttons
-                    document.getElementById('btn-user').hidden = false;
-                    document.getElementById('btn-logout').hidden = false;
+                // show user and logout buttons
+                document.getElementById('btn-user').hidden = false;
+                document.getElementById('btn-logout').hidden = false;
 
-                    // set username
-                    document.getElementById('btn-user').innerText = data.username;
-                })
-                .catch(error => {
-                    // Handle any error that occurs during the request
-                    console.error('Error:', error);
-                });
+                // set username
+                document.getElementById('btn-user').innerText = data.username;
+            }).catch(error => {
+                // Handle any error that occurs during the request
+                console.error('Error:', error);
+            });
         }
 
         function logout() {

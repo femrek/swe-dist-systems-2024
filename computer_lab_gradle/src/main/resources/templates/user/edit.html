@@ -54,10 +54,9 @@
             document.getElementById('fullName').value = data.fullName;
             document.getElementById('username').value = data.username;
             document.getElementById('department').value = data.department;
-            })
-            .catch(error => {
-                showError('Failed to fetch user data: ' + error);
-            });
+        }).catch(error => {
+            showError('Failed to fetch user data: ' + error);
+        });
     }
 
     fetchUserData();
@@ -95,23 +94,12 @@
         data.password = data.password === '' ? null : data.password;
 
         // Make a POST request to the register endpoint
-        fetch('/api/user/' + user.id, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (response.ok) {
-                    showSuccessMessageAndRedirect(3);
-                } else {
-                    showError('User editing failed ' + response.status + ' ' + response.statusText);
-                }
+        postRequest('/api/user/' + user.id, data)
+            .then(_ => {
+                showSuccessMessageAndRedirect(3);
             })
             .catch(error => {
-                showError(error);
+                showError('User editing failed ' + error);
                 console.error('Error:', error);
             });
     }
