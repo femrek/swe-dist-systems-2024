@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### images ###
-src/main/resources/profilePictures/
+src/main/resources/profilePicture/
