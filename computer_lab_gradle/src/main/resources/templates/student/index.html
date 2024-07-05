@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CLM</title>
+    <link rel="stylesheet" href="/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+<div th:insert="component/header :: header"></div>
+<div class="container">
+    <br>
+    <h4 class="display-3">Students</h4>
+    <br>
+    <div th:insert="component/popup_message :: popup_message"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Picture</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="studentTable"></tbody>
+    </table>
+</div>
+
+<!-- Update Student Modal -->
+<div class="modal fade" id="updateStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update Student</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="updateStudent()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="updateStudentName">Name</label>
+                        <input type="text" class="form-control" name="name" id="updateStudentName" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateStudentDepartment">Department</label>
+                        <input type="text" class="form-control" name="department" id="updateStudentDepartment"
+                               placeholder="Department">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button id="updateStudentCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Update Student Modal -->
+
+<!-- Delete Student Modal -->
+<div class="modal fade" id="deleteStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete Student</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="deleteStudent()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="deleteStudentName">Name</label>
+                        <input type="text" class="form-control" id="deleteStudentName" placeholder="Name" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteStudentDepartment">Department</label>
+                        <input type="text" class="form-control" id="deleteStudentDepartment" placeholder="Department"
+                               disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button id="deleteStudentCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Student Modal -->
+
+<!-- Reservation Student Modal -->
+<div class="modal fade" id="reservationComputer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Reserve a computer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="reserve()">
+                <div class="modal-body">
+                    <!-- dummy student input. shows student name -->
+                    <div class="mb-3">
+                        <label for="studentReserveInputDummy"></label>
+                        <input type="text" class="form-control" id="studentReserveInputDummy" placeholder="Name"
+                               disabled>
+                    </div>
+                    <!-- student input. keeps student id -->
+                    <!--suppress HtmlFormInputWithoutLabel -->
+                    <input id="studentReserveInput" hidden="hidden" name="studentId">
+
+                    <!-- computer dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="computerReserveInput">Computer</label>
+                        <select class="form-select" id="computerReserveInput" name="computerId"></select>
+                    </div>
+
+                    <!-- date input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="date">Date</span>
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date"
+                               id="reservationDateInput">
+                    </div>
+
+                    <!-- duration in days input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="day">Day</span>
+                        <input type="text" class="form-control" placeholder="Day" aria-label="day"
+                               aria-describedby="day" id="reservationDurationInput">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button id="reservationCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Reservation Student Modal -->
+
+<!-- Make Admin Modal -->
+<div class="modal fade" id="makeAdminModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Make User Admin</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="makeAdmin()">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="deleteStudentName">Name</label>
+                        <input type="text" class="form-control" id="makeAdminName" placeholder="Name" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteStudentDepartment">Department</label>
+                        <input type="text" class="form-control" id="makeAdminDepartment" placeholder="Department"
+                               disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Make Admin</button>
+                    <button id="makeAdminCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Make Admin Modal -->
+
+<script src="/js/app-script.js"></script>
+
+<script>
+    function fetchStudents() {
+        getRequest('/api/user-administrating')
+            .then(data => {
+                let studentTable = document.getElementById("studentTable");
+                studentTable.innerHTML = "";
+                data.forEach(student => {
+                    let isAdmin = student.roles.includes('ADMIN');
+                    let row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td><img src="${student.picturePath}" class="rounded" alt="Profile Picture" style="height: 100px; width: 100px; image-rendering: pixelated"></td>
+                        <td>${student.username}</td>
+                        <td>${student.fullName}</td>
+                        <td>${student.department}</td>
+                        <td>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateStudent"
+                                    onclick="onUpdateClick(${student.id}, '${student.fullName}', '${student.department}')">
+                                Update
+                            </button>
+                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStudent"
+                                    onclick="onDeleteClick(${student.id}, '${student.fullName}', '${student.department}')">
+                                Delete
+                            </button>
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reservationComputer"
+                                    onclick="onReserveClick(${student.id}, '${student.fullName}', '${student.department}')">
+                                Reserve
+                            </button>
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#makeAdminModal"
+                                    onclick="onMakeAdminClick(${student.id}, '${student.fullName}', '${student.department}')"
+                                     ${isAdmin ? 'hidden="hidden"' : ''}>
+                                Make Admin
+                            </button>
+                        </td>
+                    `;
+                    studentTable.appendChild(row);
+                });
+                setElementsVisibility()
+            })
+            .catch(error => {
+                showError('Error when loading students' + error.message);
+                console.error('Error:', error);
+            });
+    }
+    
+    function fetchComputers() {
+        getRequest('/api/computer')
+            .then(data => {
+                let computerReserveInput = document.getElementById("computerReserveInput");
+                computerReserveInput.innerHTML = "";
+                data.forEach(computer => {
+                    let option = document.createElement("option");
+                    option.value = computer.id;
+                    option.innerText = computer.brand + ' -' + computer.model;
+                    computerReserveInput.appendChild(option);
+                });
+            })
+            .catch(error => {
+                showError('Error when loading computers' + error.message);
+                console.error('Error:', error);
+            });
+    }
+
+    fetchStudents();
+</script>
+
+<script>
+    let selectedStudentId = null;
+
+    function onUpdateClick(id, name, department) {
+        selectedStudentId = id;
+        document.getElementById("updateStudentName").value = name;
+        document.getElementById("updateStudentDepartment").value = department;
+    }
+
+    function onDeleteClick(id, name, department) {
+        selectedStudentId = id;
+        document.getElementById("deleteStudentName").value = name;
+        document.getElementById("deleteStudentDepartment").value = department;
+    }
+
+    function onReserveClick(id, name, department) {
+        fetchComputers();
+        document.getElementById("studentReserveInputDummy").value = department + " - " + name;
+        document.getElementById("studentReserveInput").value = id;
+    }
+
+    function onMakeAdminClick(id, name, department) {
+        selectedStudentId = id;
+        document.getElementById("makeAdminName").value = name;
+        document.getElementById("makeAdminDepartment").value = department;
+    }
+</script>
+
+<script>
+    function updateStudent() {
+        event.preventDefault(); // prevent default form submission
+
+        let fullName = document.getElementById("updateStudentName").value;
+        let department = document.getElementById("updateStudentDepartment").value;
+
+        let data = {
+            fullName: fullName,
+            department: department
+        }
+
+        putRequest('/api/user-administrating/' + selectedStudentId, data)
+            .then(_ => {
+                document.getElementById("updateStudentCancel").click();
+                showSuccess('Student updated successfully');
+                fetchStudents();
+            })
+            .catch(error => {
+                showError('Error when updating student' + error.message);
+                console.error('Error:', error);
+            });
+    }
+
+    function deleteStudent() {
+        event.preventDefault(); // prevent default form submission
+
+        deleteRequest('/api/user-administrating/' + selectedStudentId)
+            .then(_ => {
+                document.getElementById("deleteStudentCancel").click();
+                showSuccess('Student deleted successfully');
+                fetchStudents();
+            })
+            .catch(error => {
+                showError('Error when deleting student' + error.message);
+                console.error('Error:', error);
+            });
+    }
+
+    function reserve() {
+        event.preventDefault(); // Prevent the default form submission
+
+        let user = localStorage.getItem('user');
+        let isAdmin = false;
+        if (user !== null && user !== '') {
+            user = JSON.parse(user);
+            if (user.roles.includes('ADMIN')) {
+                isAdmin = true;
+            }
+        } else {
+            showError('No user logged in');
+            return;
+        }
+
+        let computerId = document.getElementById("computerReserveInput").value;
+        let studentId = isAdmin ? document.getElementById("studentReserveInput").value : null;
+        let reservationDate = document.getElementById("reservationDateInput").value;
+        let duration = document.getElementById("reservationDurationInput").value;
+
+        let dataForAdmin = {
+            computerId: computerId,
+            studentId: studentId,
+            reservationDate: reservationDate,
+            duration: duration
+        };
+        let dataForStudent = {
+            computerId: computerId,
+            reservationDate: reservationDate,
+            duration: duration
+        };
+        let data = isAdmin ? dataForAdmin : dataForStudent;
+
+        let urlForAdmin = '/api/reservation';
+        let urlForStudent = '/api/users-reservation';
+        let url = isAdmin ? urlForAdmin : urlForStudent;
+
+        postRequest(url, data)
+            .then(_ => {
+                fetchStudents();
+                document.getElementById('reservationCancel').click();
+                showSuccess('Computer reserved successfully');
+            })
+            .catch(error => {
+                document.getElementById('reservationCancel').click();
+                showError('Error reserving computer: ' + error.message);
+                console.error('Error:', error);
+            });
+    }
+
+    function makeAdmin() {
+        event.preventDefault(); // Prevent the default form submission
+
+        postRequest('/api/user-administrating/'+ selectedStudentId +'/adminTrue')
+            .then(_ => {
+                document.getElementById("makeAdminCancel").click();
+                showSuccess('Student made admin successfully');
+                fetchStudents();
+            })
+            .catch(error => {
+                showError('Error when making student admin' + error.message);
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div th:fragment="popup_message">
+    <div id="success-viewer" hidden="hidden" class="alert alert-success" role="alert"></div>
+    <div id="error-viewer" hidden="hidden" class="alert alert-danger" role="alert"></div>
+
+    <script>
+        function showError(message) {
+            document.getElementById('error-viewer').hidden = false;
+            document.getElementById('error-viewer').innerText = message;
+        }
+
+        function showSuccess(message) {
+            document.getElementById('success-viewer').hidden = false;
+            document.getElementById('success-viewer').innerText = message;
+        }
+
+        function removeSuccess() {
+            document.getElementById('success-viewer').hidden = true;
+            document.getElementById('success-viewer').innerText = '';
+        }
+
+        function removeError() {
+            document.getElementById('error-viewer').hidden = true;
+            document.getElementById('error-viewer').innerText = '';
+        }
+
+        function clearMessages() {
+            removeSuccess();
+            removeError();
+        }
+    </script>
+</div>

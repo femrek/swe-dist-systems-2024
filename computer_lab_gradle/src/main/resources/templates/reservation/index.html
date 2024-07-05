@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CLM</title>
+    <link rel="stylesheet" href="/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+<div th:insert="component/header :: header"></div>
+<div class="container">
+    <br>
+    <h4 class="display-3">Reservations</h4>
+    <br>
+    <div th:insert="component/popup_message :: popup_message"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Student</th>
+            <th>Computer</th>
+            <th>Start</th>
+            <th>Duration</th>
+            <th>returned</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="reservationTable"></tbody>
+    </table>
+</div>
+
+<!-- Reservation Update Modal -->
+<div class="modal fade" id="updateReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update the reservation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="updateReservation()">
+                <div class="modal-body">
+                    <!-- computer dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="computerReserveInput">Computer</label>
+                        <select class="form-select" id="computerReserveInput" name="computerId"></select>
+                    </div>
+
+                    <!-- student dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="studentReserveInput">Student</label>
+                        <select class="form-select" id="studentReserveInput" name="studentId"></select>
+                    </div>
+
+                    <!-- date input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="date">Date</span>
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date"
+                               name="reservationDate" id="reservationDateInput">
+                    </div>
+
+                    <!-- duration in days input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="day">Day</span>
+                        <input type="text" class="form-control" placeholder="Day" aria-label="day"
+                               aria-describedby="day" name="duration" id="reservationDurationInput">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button id="updateReservationCancel" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Reservation Update Modal -->
+
+<!-- Delete Student Modal -->
+<div class="modal fade" id="deleteReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete Reservation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="deleteReservation()">
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="computerSpan">Computer</span>
+                        <input type="text" class="form-control" id="computerDeleteInput" aria-label="computerSpan"
+                               aria-describedby="computerSpan" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="studentSpan">Student</span>
+                        <input type="text" class="form-control" id="studentDeleteInput" aria-label="studentSpan"
+                               aria-describedby="studentSpan" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="dateSpan">Date</span>
+                        <input type="text" class="form-control" id="dateDeleteInput" aria-label="dateSpan" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="durationSpan">Days</span>
+                        <input type="text" class="form-control" id="durationDeleteInput" aria-label="durationSpan"
+                               disabled>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button id="deleteReservationCancel" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Student Modal -->
+
+<!-- reReservation Modal -->
+<div class="modal fade" id="reReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update the reservation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="addReservation()">
+                <div class="modal-body">
+                    <!-- computer dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="computerReReserveInput">Computer</label>
+                        <select class="form-select" id="computerReReserveInput" name="computerId">
+                            <option th:each="computer:${computers}"
+                                    th:text="|${computer.getBrand()} - ${computer.getModel()}|"
+                                    th:value="${computer.getId()}"></option>
+                        </select>
+                    </div>
+
+                    <!-- student dropdown menu input -->
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="studentReReserveInput">Student</label>
+                        <select class="form-select" id="studentReReserveInput" name="studentId">
+                            <option th:each="student:${students}"
+                                    th:text="|${student.getName()} - ${student.getDepartment()}|"
+                                    th:value="${student.getId()}"></option>
+                        </select>
+                    </div>
+
+                    <!-- date input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="reReservationDate">Date</span>
+                        <input type="date" class="form-control" aria-label="date" aria-describedby="date"
+                               name="reservationDate" id="reReservationDateInput">
+                    </div>
+
+                    <!-- duration in days input -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="reReservationDay">Day</span>
+                        <input type="text" class="form-control" placeholder="Day" aria-label="reReservationDay"
+                               aria-describedby="reReservationDay" name="duration" id="reReservationDurationInput">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button id="reReservationCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- reReservation Modal -->
+
+<!-- Reservation Return Modal -->
+<div class="modal fade" id="returnReservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Do you want to return the reservation ?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onsubmit="returnReservation()">
+                <div class="modal-body">
+                    <button type="submit" class="btn btn-success">Yes</button>
+                    <button id="reservationReturnCancel" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        No
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Reservation Return Modal -->
+
+<script src="/js/app-script.js"></script>
+<script>
+    function fetchReservations() {
+        getRequest('/api/reservation').then(data => {
+            let table = document.getElementById("reservationTable");
+            table.innerHTML = "";
+            data.forEach(reservation => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${reservation.student.fullName} - ${reservation.student.department}</td>
+                    <td>${reservation.computer.brand} - ${reservation.computer.model}</td>
+                    <td>${reservation.dateFormatted}</td>
+                    <td>${reservation.duration} days</td>
+                    <td>${reservation.isReturned}</td>
+                    <td>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateReservation"
+                                onclick="onUpdateClick(${reservation.id}, ${reservation.computer.id}, ${reservation.student.id}, '${reservation.date}', ${reservation.duration})">Update
+                        </button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteReservation"
+                                onclick="onDeleteClick(${reservation.id}, '${reservation.student.fullName}', '${reservation.student.department}', '${reservation.computer.brand}', '${reservation.computer.model}', '${reservation.reservationDate}', ${reservation.duration})">Delete
+                        </button>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reReservation"
+                                onclick="onReReserveClick(${reservation.id}, ${reservation.computer.id}, ${reservation.student.id}, '${reservation.reservationDate}', ${reservation.duration})">Re-Reserve
+                        </button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#returnReservation"
+                                onclick="onReturnReserveClick(${reservation.id})"
+                                ${reservation.isReturned ? 'disabled' : ''}>Return
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row)
+            })
+        })
+    }
+
+    function fetchComputers() {
+        getRequest('/api/computer').then(data => {
+            let computerReserveInput = document.getElementById("computerReserveInput");
+            let computerReReserveInput = document.getElementById("computerReReserveInput");
+            computerReserveInput.innerHTML = "";
+            computerReReserveInput.innerHTML = "";
+            data.forEach(computer => {
+                let option = document.createElement("option");
+                option.value = computer.id;
+                option.text = `${computer.brand} - ${computer.model}`;
+                computerReserveInput.appendChild(option);
+                computerReReserveInput.appendChild(option.cloneNode(true));
+            })
+        })
+    }
+
+    function fetchStudents() {
+        getRequest('/api/user-administrating').then(data => {
+            let studentReserveInput = document.getElementById("studentReserveInput");
+            let studentReReserveInput = document.getElementById("studentReReserveInput");
+            studentReserveInput.innerHTML = "";
+            studentReReserveInput.innerHTML = "";
+            data.forEach(student => {
+                let option = document.createElement("option");
+                option.value = student.id;
+                option.text = `${student.fullName} - ${student.department}`;
+                studentReserveInput.appendChild(option);
+                studentReReserveInput.appendChild(option.cloneNode(true));
+            })
+        })
+    }
+
+    fetchReservations();
+</script>
+
+<script>
+    function onUpdateClick(id, computerId, studentId, date, duration) {
+        selectedReservationId = id;
+        fetchComputers();
+        fetchStudents();
+        document.getElementById("computerReserveInput").value = computerId;
+        document.getElementById("studentReserveInput").value = studentId;
+        document.getElementById("reservationDateInput").value = date;
+        document.getElementById("reservationDurationInput").value = duration;
+    }
+
+    function onDeleteClick(id, studentName, studentDepartment, computerBrand, computerModel, date, duration) {
+        selectedReservationId = id;
+        document.getElementById("computerDeleteInput").value = computerBrand + " - " + computerModel;
+        document.getElementById("studentDeleteInput").value = studentName + " - " + studentDepartment;
+        document.getElementById("dateDeleteInput").value = date;
+        document.getElementById("durationDeleteInput").value = duration;
+    }
+
+    function onReReserveClick(id, computerId, studentId, date, duration) {
+        selectedReservationId = id;
+        fetchComputers();
+        fetchStudents();
+        document.getElementById("computerReReserveInput").value = computerId;
+        document.getElementById("studentReReserveInput").value = studentId;
+        document.getElementById("reReservationDateInput").value = date;
+        document.getElementById("reReservationDurationInput").value = duration;
+    }
+
+    function onReturnReserveClick(id) {
+        selectedReservationId = id;
+    }
+</script>
+
+<script>
+    let selectedReservationId;
+
+    function updateReservation() {
+        event.preventDefault(); // prevent form submission
+
+        let computerId = document.getElementById("computerReserveInput").value;
+        let studentId = document.getElementById("studentReserveInput").value;
+        let date = document.getElementById("reservationDateInput").value;
+        let duration = document.getElementById("reservationDurationInput").value;
+
+        let data = {
+            computerId: computerId,
+            studentId: studentId,
+            reservationDate: date,
+            duration: duration
+        };
+
+        putRequest('/api/reservation/' + selectedReservationId, data).then(() => {
+            fetchReservations();
+            document.getElementById("updateReservationCancel").click();
+            showSuccess("Reservation updated successfully")
+        }).catch(error => {
+            showError('Error when updating reservation: ' + error.message)
+        })
+    }
+
+    function deleteReservation() {
+        event.preventDefault(); // prevent form submission
+
+        deleteRequest('/api/reservation/' + selectedReservationId).then(() => {
+            fetchReservations();
+            document.getElementById("deleteReservationCancel").click();
+            showSuccess("Reservation deleted successfully")
+        }).catch(error => {
+            showError('Error when deleting reservation: ' + error.message)
+        })
+    }
+
+    function addReservation() {
+        event.preventDefault(); // prevent form submission
+
+        let computerId = document.getElementById("computerReReserveInput").value;
+        let studentId = document.getElementById("studentReReserveInput").value;
+        let date = document.getElementById("reReservationDateInput").value;
+        let duration = document.getElementById("reReservationDurationInput").value;
+
+        let data = {
+            computerId: computerId,
+            studentId: studentId,
+            reservationDate: date,
+            duration: duration
+        };
+
+        postRequest('/api/reservation', data).then(() => {
+            fetchReservations();
+            document.getElementById("reReservationCancel").click();
+            showSuccess("Reservation added successfully")
+        }).catch(error => {
+            showError('Error when adding reservation: ' + error.message)
+        })
+    }
+
+    function returnReservation() {
+        event.preventDefault(); // prevent form submission
+
+        postRequest('/api/reservation/' + selectedReservationId + '/return').then(() => {
+            fetchReservations();
+            document.getElementById("reservationReturnCancel").click();
+            showSuccess("Reservation returned successfully")
+        }).catch(error => {
+            showError('Error when returning reservation: ' + error.message)
+        })
+    }
+</script>
+
+</body>
+</html>
